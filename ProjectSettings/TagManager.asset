@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - stranger
+  - yushan
+  - tools
+  - items
+  - buildings
+  - player
+  - target
+  - info
+  - icon
+  - people
+  - npc
+  - npc-sprite
+  - ability
+  - action
+  - players
+  - trees
+  - roads
+  - change
+  - flirt-eye
+  - eye-vision
+  - sprite
+  - collision
+  - test
+  - traffic-counter
+  - 711-door
+  - static-blocks
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - ground
+  - collision
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: background
+    uniqueID: 3821224701
+    locked: 0
+  - name: building
+    uniqueID: 2995648021
+    locked: 0
+  - name: tools
+    uniqueID: 2336323031
+    locked: 0
+  - name: items
+    uniqueID: 695854003
+    locked: 0
+  - name: edm
+    uniqueID: 1854000375
+    locked: 0
+  - name: roads
+    uniqueID: 373737117
+    locked: 0
+  - name: people
+    uniqueID: 4070808269
+    locked: 0
+  - name: trees
+    uniqueID: 46519161
+    locked: 0
+  - name: icons
+    uniqueID: 2211872913
+    locked: 0
+  - name: camera
+    uniqueID: 3469967173
+    locked: 0
+  - name: magic
+    uniqueID: 1891582085
+    locked: 0
+  - name: traffic-light
+    uniqueID: 239219247
+    locked: 0
+  - name: dien-gan
+    uniqueID: 1329342561
+    locked: 0
