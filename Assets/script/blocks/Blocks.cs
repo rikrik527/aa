@@ -26,13 +26,18 @@ public abstract class Blocks : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        playerBox.isTrigger = false;
         int i = 0;
         for (i = 0; i < npcObj.Length; i++)
         {
-            Debug.Log("等著等著就老了" + npcObj[i].transform.GetComponent<BoxCollider2D>());
+            Debug.Log("等著等著就老了" + npcObj[i].transform.GetComponent<BoxCollider2D>() + playerBox.transform.GetComponent<BoxCollider2D>());
             Physics2D.IgnoreCollision(npcObj[i].transform.GetComponent<BoxCollider2D>(), GetComponent<PolygonCollider2D>());
 
             Physics2D.IgnoreCollision(playerBox.transform.GetComponent<BoxCollider2D>(), GetComponent<PolygonCollider2D>());
         }
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        playerBox.isTrigger = true;
     }
 }
