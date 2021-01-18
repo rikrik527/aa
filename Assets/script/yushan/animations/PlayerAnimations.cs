@@ -6,6 +6,7 @@ public class PlayerAnimations : MonoBehaviour
 {
     private SpriteRenderer _spriteRender;
     private Animator _animator;
+
     void Start()
     {
         _spriteRender = GetComponentInChildren<SpriteRenderer>();
@@ -14,9 +15,13 @@ public class PlayerAnimations : MonoBehaviour
 
     public void Move(float movement)
     {
-        _animator.SetBool("right-idle", false);
-        _animator.SetBool("left-idle", false);
-        _animator.SetBool("stop", false);
+        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("getout"))
+        {
+            Debug.Log("getout false");
+            _animator.SetBool("get-out", false);
+
+        }
+
         _animator.SetFloat("moving", Mathf.Abs(movement));
 
     }
@@ -26,33 +31,23 @@ public class PlayerAnimations : MonoBehaviour
     }
 
 
-    public void TurnLeft()
+
+    public void GetOut()
     {
-        Debug.Log("turn left");
-        _animator.SetBool("left", true);
-        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("turn-left"))
-        {
-            Debug.Log("idle");
-            _animator.SetBool("left-idle",true);
-        }
-        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("walk"))
-        {
-            Debug.Log("stop walk");
-            StopMove();
-        }
+        _animator.SetBool("get-out", true);
+        Debug.Log("getout was triggewr");
+        StartCoroutine(GetOutFail());
+        Debug.Log("1f");
+
+
+
     }
-    public void TurnRight()
+    private IEnumerator GetOutFail()
     {
-        _animator.SetBool("right", true);
-        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("turn-right"))
-        {
-            Debug.Log("idle");
-            _animator.SetBool("right-idle", true);
-        }
-        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("walk"))
-        {
-            Debug.Log("stop walk");
-            StopMove();
-        }
+        yield return new WaitForSeconds(1f);
+        Debug.Log("wait 1 f");
+        _animator.SetBool("get-out", false);
     }
+
+
 }

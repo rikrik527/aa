@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public abstract class YushanBasics : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public abstract class YushanBasics : MonoBehaviour
     protected ArrayList nicknames = new ArrayList();
     [SerializeField]
     protected int speed;
+    protected float ButtonCooler = 0.5f; // Half a second before reset
+    protected int ButtonCount = 0;
 
 
     //雨珊視線
@@ -64,10 +67,8 @@ public abstract class YushanBasics : MonoBehaviour
     [SerializeField]
     public static ArrayList npc = new ArrayList();
 
-    private BoxCollider2D m_Collider;
-    private Vector3 m_Size;
-    Vector3 m_Center;
-    Vector3 m_Min, m_Max;
+
+
     [SerializeField]
     protected Transform target; // object in the 3D World
     protected bool locked = false;
@@ -83,15 +84,7 @@ public abstract class YushanBasics : MonoBehaviour
 
         _targetAnim = GameObject.Find("target").GetComponent<TargetAnimations>();
 
-        //Fetch the Collider from the GameObject
-        m_Collider = GetComponent<BoxCollider2D>();
 
-        //Fetch the size of the Collider volume
-        m_Size = m_Collider.bounds.size;
-        m_Min = m_Collider.bounds.min;
-        m_Max = m_Collider.bounds.max;
-        m_Center = m_Collider.bounds.center;
-        //Output to the console the size of the Collider volume
 
     }
     public void Start()
@@ -103,11 +96,13 @@ public abstract class YushanBasics : MonoBehaviour
     }
     private void Update()
     {
-        Debug.Log("Collider Size : " + m_Size + m_Collider.gameObject.name);
-        movementX = Input.GetAxisRaw("Horizontal");
-        movementY = Input.GetAxisRaw("Vertical");
+
+        movementX = Input.GetAxis("Horizontal");
+        //movementX = CrossPlatformInputManager.GetAxis("Horizontal");
+        //movementY = CrossPlatformInputManager.GetAxis("Vertical");
+        movementY = Input.GetAxis("Vertical");
         rotateY = Input.GetAxis("Horizontal") * tiltAngle;//roads rotatey
-        OutputData();                                                //groundRotateY();
+                                                          //groundRotateY();
 
 
     }
@@ -119,24 +114,26 @@ public abstract class YushanBasics : MonoBehaviour
 
     }
 
-    void OutputData()
-    {
-        //Output to the console the center and size of the Collider volume
-        Debug.Log("Collider Center : " + m_Center);
-        Debug.Log("Collider Size : " + m_Size);
-        Debug.Log("Collider bound Minimum : " + m_Min);
-        Debug.Log("Collider bound Maximum : " + m_Max);
-    }
+
 
 
     private void moveCharacter()
     {
-
+        Debug.Log("movecharacter was called");
 
         bool moveUp = false;
         bool moveDown = false;
         bool moveRight = false;
         bool moveLeft = false;
+        float right = 0f;
+
+
+        Debug.Log("movementx" + movementX + "move4mentY" + movementY);
+        if (Input.GetMouseButtonDown(0) || CrossPlatformInputManager.GetButtonDown("Jump"))
+        {
+            _playerAnim.GetOut();
+            Debug.Log("clicked jump button");
+        }
 
         if (movementX > 0.1)
         {
@@ -149,11 +146,48 @@ public abstract class YushanBasics : MonoBehaviour
 
             rid.MovePosition(rid.position + (new Vector2(movementX * speed, movementY) * Time.deltaTime));
             _playerAnim.Move(movementX);
+            if (Input.GetKeyDown(KeyCode.D))
+            {
 
+
+                if (ButtonCooler > 0 && ButtonCount == 1)
+                {
+
+
+                    speed = 5;
+                    rid.MovePosition(rid.position + (new Vector2(movementX * speed, 0) * Time.deltaTime));
+                    Debug.Log("movementx" + movementX);
+                    if (movementX <= -0.1f || movementY <= -0.1f || movementY >= 0.1f)
+                    {
+                        Debug.Log("stop all side");
+                        speed = 1;
+                    }
+                }
+                else
+                {
+                    ButtonCooler = 0.5f;
+                    ButtonCount += 1;
+                }
+            }
+
+            if (ButtonCooler > 0)
+            {
+
+                ButtonCooler -= 1 * Time.deltaTime;
+
+            }
+            else
+            {
+                ButtonCount = 0;
+            }
         }
+
+
+
         if (movementX < -0.1)
         {
             moveLeft = true;
+            moveRight = false;
 
         }
         if (moveLeft == true)
@@ -180,7 +214,7 @@ public abstract class YushanBasics : MonoBehaviour
         if (movementY < -0.1)
         {
             moveUp = true;
-
+            moveDown = false;
 
 
         }
@@ -204,6 +238,8 @@ public abstract class YushanBasics : MonoBehaviour
         }
 
     }
+
+
     public virtual void OnMouseDown()
     {
         Debug.Log("mousedown on yushan" + gameObject.tag);
@@ -225,7 +261,7 @@ public abstract class YushanBasics : MonoBehaviour
 
                 float dist = Vector3.Distance(other.position, transform.position);
 
-                Debug.Log(transform + "lalala" + other.transform + "" + dist);
+
 
             }
             return true;

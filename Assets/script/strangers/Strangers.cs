@@ -91,6 +91,11 @@ public abstract class Strangers : MonoBehaviour
             kevinSmoke();
             Debug.Log(animator + "animator is");
         }
+        if (locked == true)
+        {
+            TargetPosition();
+        }
+
 
     }
     public virtual void FixedUpdate()
@@ -123,12 +128,12 @@ public abstract class Strangers : MonoBehaviour
             if (hit.TargetInSight(_sight) == true) //make distance function
             {
                 Debug.Log("to here hit.targetsight is true");
-                TargetPosition();
+
                 hit.AnalyzeInfo();
             }
 
 
-            else if (gameObject.tag != "npc" && locked == true)
+            if (gameObject.tag != "npc")
 
 
             {
@@ -166,6 +171,7 @@ public abstract class Strangers : MonoBehaviour
         Debug.Log("licked true");
 
         _target.position = transform.position;
+
 
         _targetAnim.TargetSelect();
 
