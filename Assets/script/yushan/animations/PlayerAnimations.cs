@@ -6,7 +6,7 @@ public class PlayerAnimations : MonoBehaviour
 {
     private SpriteRenderer _spriteRender;
     private Animator _animator;
-
+    public static string directions;
     void Start()
     {
         _spriteRender = GetComponentInChildren<SpriteRenderer>();
@@ -15,39 +15,43 @@ public class PlayerAnimations : MonoBehaviour
 
     public void Move(float movement)
     {
-        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("getout"))
+        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("walk"))
         {
-            Debug.Log("getout false");
+            Debug.Log("iswalking");
             _animator.SetBool("get-out", false);
 
         }
 
         _animator.SetFloat("moving", Mathf.Abs(movement));
 
+
     }
-    public void StopMove()
+
+    public void StopGetOut()
     {
-        _animator.SetBool("stop", true);
+        _animator.SetBool("get-out", false);
     }
-
-
-
     public void GetOut()
     {
         _animator.SetBool("get-out", true);
-        Debug.Log("getout was triggewr");
-        StartCoroutine(GetOutFail());
-        Debug.Log("1f");
+        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("walk"))
+        {
+            Debug.Log("is walk");
+            StopGetOut();
+        }
+
 
 
 
     }
-    private IEnumerator GetOutFail()
+    public void BumpInto()
     {
-        yield return new WaitForSeconds(1f);
-        Debug.Log("wait 1 f");
-        _animator.SetBool("get-out", false);
+        _animator.SetTrigger("bump-into");
     }
+    public void Turn()
+    {
+        _animator.SetBool("turn", true);
 
+    }
 
 }

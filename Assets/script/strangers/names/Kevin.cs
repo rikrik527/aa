@@ -30,10 +30,7 @@ public class Kevin : Strangers, YushanAbility
         base.FixedUpdate();
     }
 
-    public override void kevinSmoke()
-    {
-        base.kevinSmoke();
-    }
+
     public override void OnMouseDown()
     {
         base.OnMouseDown();

@@ -30,6 +30,7 @@ TagManager:
   - traffic-counter
   - 711-door
   - static-blocks
+  - npc-collision
   layers:
   - Default
   - TransparentFX

@@ -61,7 +61,25 @@ public abstract class Strangers : MonoBehaviour
     [SerializeField]
     protected GameObject eyeVision;
     protected CapsuleCollider2D cap2D;
+    private new Transform transform; //yushan transform
+    private List<Transform> _gameObjList;
+    protected GameObject[] _gameObj;
+    private Transform[] _trans;
+    protected SpriteRenderer spriteRen;
+    [SerializeField]
+    private List<SpriteRenderer> _spriteRen;
+    private GameObject[] gameObjects;
+    private Transform other;
+    private void Start()
+    {
 
+        //_gameObj = GameObject.FindGameObjectsWithTag("npc");
+        //foreach (GameObject go in _gameObj)
+        //{
+        //    Debug.Log("_____" + _gameObj + "00000" + go);
+        //}
+        //Debug.Log("transform" + transform);
+    }
 
 
     public virtual void Init()
@@ -72,6 +90,10 @@ public abstract class Strangers : MonoBehaviour
         _target = _targetAnim.GetComponent<Transform>();
         spriteRenderer = GameObject.FindGameObjectWithTag("sprite").GetComponent<SpriteRenderer>();
         strangerAnimations = GameObject.FindGameObjectWithTag("stranger").GetComponent<StrangerAnimations>();
+        gameObjects = GameObject.FindGameObjectsWithTag("npc");
+        transform = GetComponent<Transform>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
 
 
     }
@@ -82,19 +104,8 @@ public abstract class Strangers : MonoBehaviour
     }
     public virtual void Update()
     {
-        if (animator == null)
-        {
-            Debug.Log("error");
-        }
-        else
-        {
-            kevinSmoke();
-            Debug.Log(animator + "animator is");
-        }
-        if (locked == true)
-        {
-            TargetPosition();
-        }
+
+
 
 
     }
@@ -118,13 +129,14 @@ public abstract class Strangers : MonoBehaviour
         Debug.Log("stranger sight need to change");
 
 
-        if (gameObject.tag == "npc")
+        if (gameObject.tag == "npc" && locked == false)
         {
+            Debug.Log("npc");
             locked = true;
             npcName = transform.name;
             npc.Add(npcName);
             npcIndex++;
-
+            TargetPosition();
             if (hit.TargetInSight(_sight) == true) //make distance function
             {
                 Debug.Log("to here hit.targetsight is true");
@@ -133,7 +145,7 @@ public abstract class Strangers : MonoBehaviour
             }
 
 
-            if (gameObject.tag != "npc")
+            if (gameObject.tag != "npc" && locked == true)
 
 
             {
@@ -179,72 +191,77 @@ public abstract class Strangers : MonoBehaviour
 
     }
 
-    private IEnumerator CountDownTen()
-    {
-        yield return new WaitForSeconds(60f);
-        strangerAnimations.smoke();
 
-    }
-    public virtual void kevinSmoke()
-    {
-
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("idle"))
-        {
-
-            StartCoroutine(CountDownTen());
-
-
-        }
-    }
     private void OnMouseOver()
     {
         CheckDistance();
 
     }
 
-    //private void OnMouseEnter()
-    //{
-    //    Debug.Log("this" + this);
-    //    Debug.Log("transform" + transform);
-    //    Debug.Log("mouseenter");
-    //    eyeVision.SetActive(false);
-    //}
-    //private void OnMouseExit()
-    //{
-    //    Debug.Log("onmouseexit");
 
-    //    Debug.Log("locked == false && TargetPosition(false)");
-    //    eyeVision.SetActive(true);
+
+
+
+
+
+
+
+    //private void FindClosestEnemy()
+    //{
+    //    float distanceToClosestNpc = Mathf.Infinity;
+    //    Transform centerPointNpc = null;
+    //    Transform closestNpc = null;
+    //    _spriteRen = new List<SpriteRenderer>();
+    //    _gameObjList = new List<Transform>();
+    //    _gameObj = GameObject.FindGameObjectsWithTag("npc");
+
+    //    for (int i = 0; i < _gameObj.Length; i++)
+    //    {
+
+    //        SpriteRenderer renderer = _gameObj[i].GetComponentInChildren<SpriteRenderer>();
+    //        Transform game = _gameObj[i].transform;
+    //        if (game)
+    //        {
+    //            Debug.Log("game" + game);
+    //            _gameObjList.Add(game);
+    //            Debug.Log("gameobjectlist" + _gameObjList);
+    //        }
+    //        if (renderer)
+    //        {
+    //            Debug.Log("render" + renderer + _spriteRen);
+    //            _spriteRen.Add(renderer);
+    //        }
+    //        if (_gameObj[i].transform.name == this.transform.name)
+    //        {
+    //            centerPointNpc = this.transform;
+    //            _gameObjList.Remove(centerPointNpc);
+    //            Debug.Log("remove List gameobjects" + _gameObjList + "centerpointnpc" + centerPointNpc);
+    //        }
+    //        float distanceToNpc = (game.position - centerPointNpc.position).sqrMagnitude;
+
+    //        if (distanceToNpc < distanceToClosestNpc)
+    //        {
+
+    //            distanceToClosestNpc = distanceToNpc;
+    //            closestNpc = ;
+
+    //            if (closestNpc.transform.position.y > centerPointNpc.transform.position.y)
+    //            {
+    //                _spriteRen.sortingOrder = 1;
+    //            }
+    //            if (closestNpc.transform.position.y < centerPointNpc.transform.position.y)
+    //            {
+    //                spriteRenderer.sortingOrder = -1;
+    //            }
+
+    //        }
+    //    }
+    //    {
+
+    //    }
+
+    //    Debug.DrawLine(this.transform.position, closestNpc.transform.position);
 
     //}
 
 }
-//void OnMouseOver()
-//{
-//    if (Input.GetMouseButtonDown(0) == true && other.gameObject.tag == "stranger")
-//    {
-//        Debug.Log("mouse stranger");
-//        target = other.transform;
-//        _targetAnim.TargetSelect();
-//        Vector3 screenPos = Camera.main.ScreenToWorldPoint(target.position);
-//        Vector2 mousePos2D = new Vector2(screenPos.x, screenPos.y);
-
-//        RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.up);
-//        Debug.DrawRay(transform.position, Vector2.up * mousePos2D, Color.green);
-//        if (hit.collider != null)
-//        {
-//            float h = Screen.height;
-//            float w = Screen.width;
-//            float x = screenPos.x - (w / 2);
-//            float y = screenPos.y - (h / 2);
-//            float s = canvas.scaleFactor;
-//            icon.anchoredPosition = new Vector2(x, y) / s;
-//            Debug.Log("x,y" + screenPos.x + screenPos.y);
-//            Debug.Log("target" + target);
-//            Debug.Log("hit.collider.gameobjectname" + hit.collider.gameObject.name);
-
-//            hit.collider.attachedRigidbody.AddForce(Vector2.up);
-//        }
-//    }
-
-//}
