@@ -31,6 +31,19 @@ TagManager:
   - 711-door
   - static-blocks
   - npc-collision
+  - line
+  - cam1
+  - cam
+  - wen-shin-road-2nd
+  - virtual-stick
+  - gobj
+  - punch
+  - zoom-out
+  - zoom-in
+  - cam2
+  - street
+  - street-image
+  - ui
   layers:
   - Default
   - TransparentFX
@@ -86,6 +99,9 @@ TagManager:
   - name: roads
     uniqueID: 373737117
     locked: 0
+  - name: shadow
+    uniqueID: 3518810839
+    locked: 0
   - name: people
     uniqueID: 4070808269
     locked: 0
@@ -95,9 +111,6 @@ TagManager:
   - name: icons
     uniqueID: 2211872913
     locked: 0
-  - name: camera
-    uniqueID: 3469967173
-    locked: 0
   - name: magic
     uniqueID: 1891582085
     locked: 0
@@ -106,4 +119,7 @@ TagManager:
     locked: 0
   - name: dien-gan
     uniqueID: 1329342561
+    locked: 0
+  - name: camera
+    uniqueID: 2019632535
     locked: 0

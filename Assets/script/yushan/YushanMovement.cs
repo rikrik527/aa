@@ -6,11 +6,7 @@ public class YushanMovement : YushanBasics
 {
 
 
-    public new void Start()
-    {
-        base.Start();
-        Debug.Log("yushan start on movemenbt with interface yushanability");
-    }
+
 
     public override void OnMouseDown()
     {

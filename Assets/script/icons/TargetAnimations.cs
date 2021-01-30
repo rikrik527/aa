@@ -13,26 +13,26 @@ public class TargetAnimations : MonoBehaviour
     private Animator _anim;
     void Start()
     {
-        
+
         _trans = GetComponent<Transform>();
         _anim = GetComponentInChildren<Animator>();
     }
-    public void PlayAnimation()
-    {
-        _anim.Play("target");
-    }
+
     public void TargetSelect()
     {
         _anim.SetBool("locked", true);
         _anim.SetTrigger("target");
-        Debug.Log("i was triggered");
-        PlayAnimation();
-       
+
+
+
     }
-    public void TargetNotSelect()
+    public void idle()
     {
-        Debug.Log("locked setbool is false");
+
         _anim.SetBool("locked", false);
+        Debug.Log("target idle");
+
+
     }
-    
+
 }

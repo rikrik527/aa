@@ -4,12 +4,12 @@ using UnityEngine;
 public interface YushanAbility
 {
 
-    bool Sight { get; set; }
-    int Attentions { get; set; }
+    //bool Sight { get; set; }
+    //int Attentions { get; set; }
 
-    void Damage();
-    void AnalyzeInfo();
-    bool TargetInSight(bool Sight);
+    //void Damage();
+    //void AnalyzeInfo();
+    //bool TargetInSight(bool Sight);
 
 
 

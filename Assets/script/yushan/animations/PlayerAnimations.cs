@@ -48,10 +48,6 @@ public class PlayerAnimations : MonoBehaviour
     {
         _animator.SetTrigger("bump-into");
     }
-    public void Turn()
-    {
-        _animator.SetBool("turn", true);
 
-    }
 
 }
