@@ -8,10 +8,7 @@ public class YushanMovement : YushanBasics
 
 
 
-    public override void OnMouseDown()
-    {
-        base.OnMouseDown();
-    }
+
 
 
 

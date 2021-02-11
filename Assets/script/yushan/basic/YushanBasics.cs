@@ -12,6 +12,8 @@ public abstract class YushanBasics : MonoBehaviour
     [SerializeField]
     protected int health;
     [SerializeField]
+    protected int scores;
+    [SerializeField]
     protected int money;
     [SerializeField]
     protected int skillPoint;
@@ -25,18 +27,14 @@ public abstract class YushanBasics : MonoBehaviour
     protected ArrayList nicknames = new ArrayList();
     [SerializeField]
     protected int speed;
-    protected float ButtonCooler = 0.5f; // Half a second before reset
-    protected int ButtonCount = 0;
+
 
 
     //雨珊視線
-    protected bool _sight = false;
-    [SerializeField]
-    protected GameObject eyeVision;
 
-    [SerializeField]
-    protected Transform[] waypoints;
-    protected int waypointsIndex = 0;
+
+
+
     protected bool canRun;
 
     [SerializeField]
@@ -53,15 +51,14 @@ public abstract class YushanBasics : MonoBehaviour
     protected GameObject flirtEye;
     //test
     private Transform _roads;
-    public static float movementX;
-    public static float movementY;
+    private float movementX;
+    private float movementY;
     private float rotateY;
     [SerializeField]
     private float tiltAngle = 60.0f;
 
 
-    //targetdistance
-    public Transform other;
+
     //路人
     [SerializeField]
     public static string npcName;
@@ -82,6 +79,7 @@ public abstract class YushanBasics : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     [SerializeField]
     private SpriteRenderer[] _spriteRen;
+    [SerializeField]
     private GameObject[] _gameObjTarget;
     private GameObject _yushanGameObj;
     private Transform others;
@@ -92,16 +90,18 @@ public abstract class YushanBasics : MonoBehaviour
     private bool moveLeft = false;
     public enum Move { up, down, right, left }
     //ui
-    [SerializeField]
-    protected Text text;
-    [SerializeField]
-    protected Canvas canvas;
-    [SerializeField]
-    protected Button button;
+
 
 
     protected LineRenderer lineRender;
-    protected float distance;
+
+
+    //add-on
+
+    //collision stats
+    private PolygonCollider2D polygonCollider2D;
+
+
 
     private void Init()
     {
@@ -161,33 +161,14 @@ public abstract class YushanBasics : MonoBehaviour
     private void moveCharacter()
     {
         Debug.Log("movecharacter was called");
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            StartCoroutine(RunningLv1());// run one second and speed down to 1
-            Debug.Log("can run" + canRun);                  //after one minute can run again
-            if (canRun == true)
-            {
-                Run();
-                Debug.Log("getkeydown Run");
-            }
-
-        }
 
 
 
 
-        if (Input.GetMouseButtonDown(0) || CrossPlatformInputManager.GetButtonDown("Jump"))
-        {
-            getout = true;
-            if (getout == true)
-            {
-                _playerAnim.GetOut();
-                StartCoroutine(GetOutNo());
 
-            }
 
-            Debug.Log("clicked jump button");
-        }
+
+
 
         if (movementX > 0.1)
         {
@@ -211,10 +192,10 @@ public abstract class YushanBasics : MonoBehaviour
                 }
 
             }
-
+            _playerAnim.Move(movementX);
             rid.MovePosition(rid.position + (new Vector2(movementX * speed, movementY) * Time.deltaTime));
 
-            _playerAnim.Move(movementX);
+
         }
 
 
@@ -244,9 +225,10 @@ public abstract class YushanBasics : MonoBehaviour
                 }
 
             }
+            _playerAnim.Move(movementX);
             rid.MovePosition(rid.position + (new Vector2(-movementX * -speed, movementY) * Time.deltaTime));
 
-            _playerAnim.Move(movementX);
+
 
 
         }
@@ -259,12 +241,22 @@ public abstract class YushanBasics : MonoBehaviour
         }
         if (moveDown == true)
         {
-            canRun = true;
 
+            if (movementY > 0)
+            {
+                directions = "up";
+                if (directions == "up")
+                {
 
+                    Debug.Log("up" + directions);
+
+                }
+
+            }
+            _playerAnim.Move(movementY);
 
             rid.MovePosition(rid.position + (new Vector2(movementX, movementY * speed) * Time.deltaTime));
-            _playerAnim.Move(movementY);
+
         }
         if (movementY < -0.1)
         {
@@ -275,15 +267,26 @@ public abstract class YushanBasics : MonoBehaviour
         }
         if (moveUp == true)
         {
-            canRun = true;
+            if (movementY < 0)
+            {
+                directions = "down";
+                if (directions == "down")
+                {
 
+                    Debug.Log("down" + directions);
+
+                }
+
+            }
+            _playerAnim.Move(movementY);
 
 
             rid.MovePosition(rid.position + (new Vector2(movementX, -movementY * -speed) * Time.deltaTime));
-            _playerAnim.Move(movementY);
+
         }
         if (movementX == 0 && movementY == 0)
         {
+            Debug.Log("all false");
             moveUp = false;
             moveDown = false;
             moveRight = false;
@@ -291,49 +294,14 @@ public abstract class YushanBasics : MonoBehaviour
         }
         if (moveLeft == false && moveRight == false && moveDown == false && moveUp == false)
         {
-
+            Debug.Log("playeranim.move(0)");
             _playerAnim.Move(0);
         }
 
     }
 
-    private void Run()
-    {
 
 
-
-
-
-
-
-
-
-        rid.MovePosition(rid.position + (new Vector2(movementX * speed, 0) * Time.deltaTime));
-
-
-        Debug.Log("movementx" + movementX);
-        if (movementX <= -0.1f || movementY <= -0.1f || movementY >= 0.1f)
-        {
-            Debug.Log("stop all side");
-            speed = 1;
-        }
-
-
-
-
-
-    }
-
-    private IEnumerator RunningLv1()
-    {
-        canRun = true;
-        speed = 5;
-        yield return new WaitForSeconds(1f);
-        speed = 1;
-        canRun = false;
-        yield return new WaitForSeconds(60f);
-        canRun = true;//runing can run again after 60 seconds
-    }
     private IEnumerator GetOutNo()
     {
         yield return new WaitForSeconds(1.5f);
@@ -341,93 +309,64 @@ public abstract class YushanBasics : MonoBehaviour
         _playerAnim.StopGetOut();
         Debug.Log("stopgetout le la");
     }
-    public virtual void OnMouseDown()
+
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("mousedown on yushan" + gameObject.tag);
-        if (gameObject.tag == "npc")
-        {
-            Debug.Log("tarhetdistance on yushanbasic");
-            TargetDistance();
-        }
-    }
-    bool TargetDistance()
-    {
-        Debug.Log("targetDistance fires");
-        if (Input.GetMouseButtonDown(0))
+        Debug.Log("oncollisionenter2d happened");
+
+
+
+        if (collision != null)
         {
 
-            other = GameObject.FindGameObjectWithTag("npc").GetComponent<Transform>();
-            if (other)
-            {
-                Debug.Log("other" + other);
-                float dist = Vector3.Distance(other.position, transform.position);
-                Debug.Log("dist" + dist);
+            Debug.Log("npc-collision" + collision);
 
-
-            }
-            return true;
-        }
-        return false;
-
-    }
-
-
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        Debug.Log("directions" + directions);
-        for (int i = 0; i < _gameObjTarget.Length; i++)
-        {
-
-            if (collision.transform.tag == "npc-collision")
+            if (directions == "right")
             {
 
-                Debug.Log("npc-collision");
-                if (directions == "right")
-                {
-                    Debug.Log("npc collision righjt");
+                Debug.Log("npc collision righjt");
 
-                    _playerAnim.BumpInto();
+                _playerAnim.BumpInto();
 
-                    rid.AddForce(transform.forward * speed * Time.deltaTime);
-                }
-                if (directions == "left")
-                {
-                    Debug.Log("npc collision left");
 
-                    _playerAnim.BumpInto();
 
-                    rid.AddForce(-transform.forward * speed * Time.deltaTime);
-                }
 
+                directions = null;
             }
+            if (directions == "left")
+            {
+
+                Debug.Log("npc collision left");
+
+                _playerAnim.BumpInto();
+
+
+
+                directions = null;
+            }
+
         }
-        Debug.Log("ontrigger");
-        if (collision.GetComponent<CapsuleCollider2D>() && gameObject.tag == "npc")
+        else if (collision.transform.tag == "static-block")
         {
-            Debug.Log("collision happened");
-            collision.GetComponent<CapsuleCollider2D>().gameObject.SetActive(false);
+            Debug.Log("collision with" + collision);
+            return;
         }
-
-
-        //bump-into animation
-
-
-
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+
+    private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.tag == "npc")
-        {
-            Debug.Log("yushan hit some one with walk");
-            _playerAnim.BumpInto();
-
-
-
-            rid.AddForce(transform.forward * 10 * Time.deltaTime, ForceMode2D.Force);
-        }
+        _playerAnim.BumpIntoOff();
     }
+
+
+
+
+
+
+
+
+
 
 
 
@@ -467,12 +406,12 @@ public abstract class YushanBasics : MonoBehaviour
                     {
                         spriteRenderer.sortingOrder = -1;
                     }
-                    if (_gameObj[i].transform.position.y > _gameObj[i].transform.position.y)
+                    if (closestNpc.transform.position.y > _gameObj[i].transform.position.y)
                     {
                         Debug.Log("_sp[a]");
                         _gameObj[i].GetComponentInChildren<SpriteRenderer>().sortingOrder = 1;
                     }
-                    if (_gameObj[i].transform.position.y < _gameObj[i].transform.position.y)
+                    if (closestNpc.transform.position.y < _gameObj[i].transform.position.y)
                     {
                         Debug.Log("game[i]" + _gameObj[i]); _gameObj[i].GetComponentInChildren<SpriteRenderer>().sortingOrder = -1;
                     }
@@ -483,12 +422,13 @@ public abstract class YushanBasics : MonoBehaviour
         }
         lineRender.SetPosition(0, new Vector3(closestNpc.position.x, closestNpc.position.y, 0f));
         lineRender.SetPosition(1, new Vector3(this.transform.position.x, this.transform.position.y, 0f));
-        distance = (closestNpc.position - this.transform.position).sqrMagnitude;
-        //distanceText.text = distance.ToString();
+
+
 
         Debug.DrawLine(this.transform.position, closestNpc.transform.position);
 
     }
+
 
 }
 

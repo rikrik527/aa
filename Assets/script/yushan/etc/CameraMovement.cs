@@ -1,24 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.iOS;
+
 using Cinemachine;
 public class CameraMovement : MonoBehaviour
 {
-    [SerializeField]
-    private CinemachineVirtualCamera cinemachineVirtualCamera;
-    [SerializeField]
-    private CinemachineVirtualCamera cinemachineVirtualCamera2;
+
     [SerializeField]
     CinemachineBrain cinemachineBrain;
     [SerializeField]
     private GameObject gameObj;
     [SerializeField]
     private GameObject gameObject2;
-    [SerializeField]
-    public Camera cam;
-    [SerializeField]
-    private float zoomStep, minCamSize, maxCamSize;
+
     private Vector3 dragOrigin;
     private Vector3 touchOrigin;
 

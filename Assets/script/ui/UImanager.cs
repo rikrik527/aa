@@ -19,18 +19,52 @@ public class UImanager : MonoBehaviour
         }
     }
 
-    public Button _actions, _punch;
+    public Button _actions, _punch, _cry, _command, _run;
+    public PlayerAnimations _playerAnims;
+    public CameraEngine cameraEngine;
+    private void Init()
+    {
+        cameraEngine = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraEngine>();
+        _playerAnims = GameObject.FindGameObjectWithTag("players").GetComponentInChildren<PlayerAnimations>();
+
+    }
     private void Awake()
     {
+        Init();
+        Debug.Log("_instance = this" + _instance);
+        if (_playerAnims == null)
+        {
+            Debug.Log("error");
+        }
+        if (cameraEngine == null)
+        {
+            Debug.Log("cameraEngine not found");
+            throw new System.Exception();
+        }
+
         _instance = this;
     }
-    public void ActionsOpen()
+    private void Update()
     {
-        Debug.Log("clicked buttton");
-        _actions.GetComponent<Animator>().SetBool("open-actions", true);
+
     }
-    public void SwitchPunch()
+    public void Actions()
     {
-        _actions.GetComponent<Animation>().Play(string.Empty);
+        return;
     }
+    public void Punch()
+    {
+        return;
+    }
+    public void Cry()
+    {
+        _playerAnims.PrepareToCry();
+        cameraEngine.CenterCameraPosition();
+
+    }
+    public void Run()
+    {
+        _playerAnims.Run();
+    }
+
 }

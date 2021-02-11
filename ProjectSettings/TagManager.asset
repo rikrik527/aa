@@ -44,6 +44,10 @@ TagManager:
   - street
   - street-image
   - ui
+  - run
+  - cry
+  - command
+  - fire-gun
   layers:
   - Default
   - TransparentFX

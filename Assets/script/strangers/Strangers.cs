@@ -4,54 +4,18 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 using Cinemachine;
-public abstract class Strangers : MonoBehaviour
+public abstract class Strangers : MonoBehaviour // there are 300 strangers in the whole game and 150 male 150 female and 50 characters of stranger will trigger event
 {
 
-    [SerializeField]
-    protected Camera camera;
 
-    [SerializeField]
-    protected CinemachineVirtualCamera cam1;
-    [SerializeField]
-    private Transform none;
 
-    private void Init()
-    {
-        cam1 = GameObject.Find("cam1").GetComponent<CinemachineVirtualCamera>();
-    }
-    private void Start()
-    {
-        if (cam1 == null)
-        {
-            Debug.Log("did not cam1");
-            return;
-        }
-    }
+
 
     public virtual void Update()
     {
-
-        // mouse down select target and have canvas menu show up and camera zoom in
-        if (Input.GetMouseButtonDown(0))
-        {
-            Vector2 worldPoint = camera.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D hitInfo = Physics2D.Raycast(worldPoint, Vector2.zero);
-            if (hitInfo.collider != null)
-            {
-                Debug.Log("hitinfo.collider.name" + hitInfo.collider.name);
-                if (hitInfo.collider.tag == "npc")
-                {
-                    Transform target = null;
-                    Debug.Log("clicked npc" + hitInfo.collider.gameObject.transform);
-                    target = hitInfo.collider.gameObject.transform;
-                    cam1.m_Follow = none;
-                    cam1.m_Follow = target;
-
-                }
-            }
-
-        }
     }
+    // mouse down select target and have canvas menu show up and camera zoom in must in distance can select target 
+
     public virtual void move()
     {
         // let npc have raycast to determine distance
