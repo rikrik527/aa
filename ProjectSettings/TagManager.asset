@@ -48,6 +48,16 @@ TagManager:
   - cry
   - command
   - fire-gun
+  - zoom-close-up
+  - cam3
+  - information
+  - exit
+  - kick
+  - select
+  - cam-reverse
+  - talk
+  - virtual-ground
+  - cam4
   layers:
   - Default
   - TransparentFX

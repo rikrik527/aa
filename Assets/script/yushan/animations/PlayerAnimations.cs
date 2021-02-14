@@ -8,7 +8,6 @@ public class PlayerAnimations : MonoBehaviour
     private Animator _animator;
     public static string directions;
 
-    private bool moveIsCalled = false;
     void Start()
     {
         _spriteRender = GetComponentInChildren<SpriteRenderer>();
@@ -22,9 +21,13 @@ public class PlayerAnimations : MonoBehaviour
             Debug.Log("bug");
             _animator.SetFloat("moving", Mathf.Abs(movement));
         }
+        else
+        {
+            _animator.SetFloat("moving", Mathf.Abs(movement));
+        }
 
         _animator.SetFloat("moving", Mathf.Abs(movement));
-        moveIsCalled = true;
+
 
 
     }
@@ -50,12 +53,10 @@ public class PlayerAnimations : MonoBehaviour
     {
         _animator.SetBool("bump-into", true);
     }
-    public void PrepareToCry()
+    public void SitOnGround()
     {
-        _animator.SetBool("cry", true);
-
-        Cry();
-
+        _animator.SetBool("sit-on-ground", true);
+        _animator.SetBool("cry", false);
 
     }
     public void Cry()
@@ -63,16 +64,15 @@ public class PlayerAnimations : MonoBehaviour
 
 
         _animator.SetBool("cry", true);
-        if (moveIsCalled == true)
-        {
-            StopCry();
-        }
+
 
     }
     public void StopCry()
     {
+
+        _animator.SetBool("sit-on-ground", false);
         _animator.SetBool("cry", false);
-        moveIsCalled = false;
+
     }
     public void BumpIntoOff()
     {

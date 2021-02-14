@@ -45,7 +45,7 @@ public abstract class YushanBasics : MonoBehaviour
     protected Rigidbody2D rid;
     protected SpriteRenderer spriteRender;
     private PlayerAnimations _playerAnim;
-    private TargetAnimations _targetAnim;
+
 
     protected Animator animator;
     protected GameObject flirtEye;
@@ -73,10 +73,10 @@ public abstract class YushanBasics : MonoBehaviour
     protected bool locked = false;
     protected Transform _target; // collision transform which might be yushan player
     private new Transform transform; //yushan transform
-    private GameObject[] _gameObj;
-    private SpriteRenderer[] _spriteRenderers;
+
+
     private Transform[] _trans;
-    private SpriteRenderer spriteRenderer;
+
     [SerializeField]
     private SpriteRenderer[] _spriteRen;
     [SerializeField]
@@ -93,13 +93,16 @@ public abstract class YushanBasics : MonoBehaviour
 
 
 
-    protected LineRenderer lineRender;
+
 
 
     //add-on
 
     //collision stats
-    private PolygonCollider2D polygonCollider2D;
+
+    //virtual ground
+    [SerializeField]
+    private PolygonCollider2D virtualGround;
 
 
 
@@ -112,22 +115,19 @@ public abstract class YushanBasics : MonoBehaviour
         spriteRender = GetComponentInChildren<SpriteRenderer>();
         rid = GetComponent<Rigidbody2D>();
 
-        _targetAnim = GameObject.Find("target").GetComponent<TargetAnimations>();
+
         transform = GetComponent<Transform>();//get yushan
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
         _gameObjTarget = GameObject.FindGameObjectsWithTag("npc-collision");
         _yushanGameObj = GameObject.FindGameObjectWithTag("collision");
-        lineRender = GameObject.FindGameObjectWithTag("line").GetComponent<LineRenderer>();
+
 
     }
     private void Start()
     {
 
         Init();
-        if (lineRender != null)
-        {
-            lineRender.positionCount = 2;//line render between 2 object
-        }
+
 
 
 
@@ -143,7 +143,7 @@ public abstract class YushanBasics : MonoBehaviour
         rotateY = Input.GetAxis("Horizontal") * tiltAngle;//roads rotatey
                                                           //groundRotateY();
 
-        FindClosestEnemy();
+
 
 
     }
@@ -314,12 +314,12 @@ public abstract class YushanBasics : MonoBehaviour
     {
         Debug.Log("oncollisionenter2d happened");
 
-
+        Collider2D collider2D = GetComponent<Collider2D>();
 
         if (collision != null)
         {
 
-            Debug.Log("npc-collision" + collision);
+            Debug.Log("npc-collision" + collision.gameObject.tag);
 
             if (directions == "right")
             {
@@ -327,6 +327,7 @@ public abstract class YushanBasics : MonoBehaviour
                 Debug.Log("npc collision righjt");
 
                 _playerAnim.BumpInto();
+                collider2D.attachedRigidbody.AddForce(Vector2.left);
 
 
 
@@ -340,7 +341,7 @@ public abstract class YushanBasics : MonoBehaviour
 
                 _playerAnim.BumpInto();
 
-
+                collider2D.attachedRigidbody.AddForce(Vector2.right);
 
                 directions = null;
             }
@@ -375,59 +376,6 @@ public abstract class YushanBasics : MonoBehaviour
 
 
 
-    void FindClosestEnemy()
-    {
-        float distanceToClosestNpc = Mathf.Infinity;
-
-        Transform closestNpc = null;
-
-        _gameObj = GameObject.FindGameObjectsWithTag("npc");
-        _spriteRenderers = gameObject.GetComponentsInChildren<SpriteRenderer>();
-
-
-        for (int i = 0; i < _gameObj.Length; i++)
-        {
-
-            for (int a = 0; a < _spriteRenderers.Length; a++)
-            {
-                float distanceToNpc = (_gameObj[i].transform.position - this.transform.position).sqrMagnitude;
-
-                if (distanceToNpc < distanceToClosestNpc)
-                {
-
-                    distanceToClosestNpc = distanceToNpc;
-                    closestNpc = _gameObj[i].transform;
-
-                    if (closestNpc.transform.position.y > this.transform.position.y)
-                    {
-                        spriteRenderer.sortingOrder = 1;
-                    }
-                    if (closestNpc.transform.position.y < this.transform.position.y)
-                    {
-                        spriteRenderer.sortingOrder = -1;
-                    }
-                    if (closestNpc.transform.position.y > _gameObj[i].transform.position.y)
-                    {
-                        Debug.Log("_sp[a]");
-                        _gameObj[i].GetComponentInChildren<SpriteRenderer>().sortingOrder = 1;
-                    }
-                    if (closestNpc.transform.position.y < _gameObj[i].transform.position.y)
-                    {
-                        Debug.Log("game[i]" + _gameObj[i]); _gameObj[i].GetComponentInChildren<SpriteRenderer>().sortingOrder = -1;
-                    }
-                }
-
-
-            }
-        }
-        lineRender.SetPosition(0, new Vector3(closestNpc.position.x, closestNpc.position.y, 0f));
-        lineRender.SetPosition(1, new Vector3(this.transform.position.x, this.transform.position.y, 0f));
-
-
-
-        Debug.DrawLine(this.transform.position, closestNpc.transform.position);
-
-    }
 
 
 }

@@ -22,10 +22,12 @@ public class UImanager : MonoBehaviour
     public Button _actions, _punch, _cry, _command, _run;
     public PlayerAnimations _playerAnims;
     public CameraEngine cameraEngine;
+    public Animator animator;
     private void Init()
     {
         cameraEngine = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraEngine>();
         _playerAnims = GameObject.FindGameObjectWithTag("players").GetComponentInChildren<PlayerAnimations>();
+        animator = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Animator>();
 
     }
     private void Awake()
@@ -39,6 +41,12 @@ public class UImanager : MonoBehaviour
         if (cameraEngine == null)
         {
             Debug.Log("cameraEngine not found");
+            throw new System.Exception();
+        }
+        if (animator == null)
+        {
+
+            Debug.Log("animator not found");
             throw new System.Exception();
         }
 
@@ -56,11 +64,26 @@ public class UImanager : MonoBehaviour
     {
         return;
     }
+
     public void Cry()
     {
-        _playerAnims.PrepareToCry();
-        cameraEngine.CenterCameraPosition();
 
+        _playerAnims.SitOnGround();
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("sit-on-ground"))
+        {
+            return;
+        }
+        else
+        {
+            _playerAnims.Cry();
+        }
+
+
+
+    }
+    public void StopCry()
+    {
+        _playerAnims.StopCry();
     }
     public void Run()
     {

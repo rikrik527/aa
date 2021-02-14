@@ -59,24 +59,18 @@
     <Compile Include="Assets/SampleScenes/Scripts/LevelReset.cs" />
     <Compile Include="Assets/SampleScenes/Menu/Scripts/SceneAndURLLoader.cs" />
     <Compile Include="Assets/script/yushan/basic/LayerUpAndDown.cs" />
-    <Compile Include="Assets/script/icons/TargetAnimations.cs" />
+    <Compile Include="Assets/script/strangers/animations/SelectingAnimations.cs" />
     <Compile Include="Assets/SampleScenes/Menu/Scripts/PauseMenu.cs" />
-    <Compile Include="Assets/script/yushan/etc/CameraMovement.cs" />
-    <Compile Include="Assets/script/yushan/button/Actions.cs" />
-    <Compile Include="Assets/script/LineDraw.cs" />
-    <Compile Include="Assets/script/ParallaxBackground.cs" />
+    <Compile Include="Assets/script/ui/ExitInformation.cs" />
     <Compile Include="Assets/script/strangers/names/Kevin.cs" />
-    <Compile Include="Assets/script/blocks/StreetOne.cs" />
     <Compile Include="Assets/script/yushan/basic/YushanBasics.cs" />
-    <Compile Include="Assets/script/yushan/button/AbilityAnimations.cs" />
     <Compile Include="Assets/script/OutfitChanger.cs" />
-    <Compile Include="Assets/script/blocks/Blocks.cs" />
     <Compile Include="Assets/SampleScenes/Scripts/CameraSwitch.cs" />
+    <Compile Include="Assets/script/yushan/etc/CameraEngine.cs" />
     <Compile Include="Assets/script/ui/UImanager.cs" />
     <Compile Include="Assets/script/strangers/names/Judo.cs" />
     <Compile Include="Assets/script/yushan/etc/CollisionChange.cs" />
     <Compile Include="Assets/SampleScenes/Scripts/ParticleSceneControls.cs" />
-    <Compile Include="Assets/script/ParallaxLayer.cs" />
     <Compile Include="Assets/script/strangers/Strangers.cs" />
     <Compile Include="Assets/SampleScenes/Scripts/SlowMoButton.cs" />
     <Compile Include="Assets/script/strangers/data/StrangerData.cs" />
@@ -87,14 +81,10 @@
     <Compile Include="Assets/script/3d-roads/Roads.cs" />
     <Compile Include="Assets/script/yushan/ability/FlirtEye.cs" />
     <Compile Include="Assets/script/strangers/names/Miyamoto.cs" />
-    <Compile Include="Assets/script/yushan/button/Ability.cs" />
     <Compile Include="Assets/script/Time/CurrentTime.cs" />
     <Compile Include="Assets/script/strangers/animations/StrangerAnimations.cs" />
     <Compile Include="Assets/script/yushan/interface/YushanAbility.cs" />
-    <Compile Include="Assets/script/ParallaxCamera.cs" />
     <Compile Include="Assets/script/yushan/basic/movementX.cs" />
-    <Compile Include="Assets/script/yushan/etc/ScrollAndPinch.cs" />
-    <Compile Include="Assets/script/yushan/etc/CameraEngine.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets/SampleScenes/Shaders/Skybox-Procedural.shader" />
