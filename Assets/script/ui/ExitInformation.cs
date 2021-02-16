@@ -26,10 +26,11 @@ public class ExitInformation : MonoBehaviour
     private Button _exit;
 
     private SelectingAnimations _selectingAnimations;
+    private CinemachineVirtualCamera targetCam;
     private CinemachineTransposer transposer;
     //cam1
     [SerializeField]
-    private CinemachineVirtualCamera cam1;
+    private GameObject cam1;
     [SerializeField]
     private GameObject cam2;
     [SerializeField]
@@ -43,7 +44,8 @@ public class ExitInformation : MonoBehaviour
 
     private void Init()
     {
-        transposer = cam1.GetCinemachineComponent<CinemachineTransposer>();
+        targetCam = GameObject.FindGameObjectWithTag("cam4").GetComponent<CinemachineVirtualCamera>();
+
         _selectingAnimations = GameObject.FindGameObjectWithTag("select").GetComponent<SelectingAnimations>();
     }
     private void Awake()
@@ -54,16 +56,17 @@ public class ExitInformation : MonoBehaviour
     public void Exit()
     {
         informationPanel.SetActive(false);
-        CameraEngine.target = null;
-        cam1.m_Follow = _yushan;
-        cam1.m_Lens.FieldOfView = CameraEngine.defaultFieldOfView;
+
+        targetCam.m_Follow = null;
+        targetCam.m_Lens.OrthographicSize = CameraEngine.defaultFieldOfView;
         transposer.m_FollowOffset.x = CameraEngine.defaultOffsetX;
         transposer.m_FollowOffset.y = CameraEngine.defaultOffsetY;
         transposer.m_FollowOffset.z = CameraEngine.defaultOffsetZ;
-        if (cam1.isActiveAndEnabled == false)
+        if (targetCam.isActiveAndEnabled == false)
         {
             Debug.Log("cam1.isactiveandenabled == false");
-            cam1.enabled = true;
+            targetCam.enabled = true;
+            cam1.SetActive(true);
             cam2.SetActive(false);
             cam3.SetActive(false);
         }

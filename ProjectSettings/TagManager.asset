@@ -101,6 +101,9 @@ TagManager:
   - name: building
     uniqueID: 2995648021
     locked: 0
+  - name: roads
+    uniqueID: 373737117
+    locked: 0
   - name: tools
     uniqueID: 2336323031
     locked: 0
@@ -109,9 +112,6 @@ TagManager:
     locked: 0
   - name: edm
     uniqueID: 1854000375
-    locked: 0
-  - name: roads
-    uniqueID: 373737117
     locked: 0
   - name: shadow
     uniqueID: 3518810839

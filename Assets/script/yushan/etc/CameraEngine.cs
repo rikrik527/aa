@@ -66,6 +66,23 @@ public class CameraEngine : MonoBehaviour
 
 
 
+    public RectTransform holdingHandGameObject;
+
+
+
+    public RectTransform clickHandGameObject;
+
+    public GameObject targetGameObject;
+    public RectTransform rectTransform2;
+    private Vector2 startHandPosition;
+    private float speed = 1000f;
+    private Vector2 newPos2;
+
+
+
+
+
+
 
 
 
@@ -81,7 +98,7 @@ public class CameraEngine : MonoBehaviour
     [SerializeField]
     private Canvas canvas;
     [SerializeField]
-    private GameObject _selecting;
+    private RectTransform _selecting;
     private SelectingAnimations selectingAnimations;
     private RectTransform _rectTransform;
     private Image _image;
@@ -128,19 +145,26 @@ public class CameraEngine : MonoBehaviour
         //cinemachinBrain
         cinemachineBrain = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CinemachineBrain>();
         talkColor = GameObject.FindGameObjectWithTag("talk").GetComponent<Image>();
+        rectTransform2 = transform.GetComponent<RectTransform>();
+
+
         if (targetCam == null)
         {
             Debug.Log("targetcam is null");
         }
+        Debug.Log("rectransform2" + rectTransform2);
     }
     private void Awake()
     {
         Init();
+        rectTransform2 = (transform as RectTransform);
+
 
         transposer.m_FollowOffset.x = defaultOffsetX;
         transposer.m_FollowOffset.y = defaultOffsetY;
         transposer.m_FollowOffset.z = defaultOffsetZ;
         targetCam.m_Lens.OrthographicSize = defaultOrthographicSize;
+        startHandPosition = clickHandGameObject.anchoredPosition;
     }
     private void Start()
     {
@@ -175,7 +199,8 @@ public class CameraEngine : MonoBehaviour
     }
     private void Update()
     {
-        FindClosestEnemy(rectTransform);
+        Debug.Log("rec2" + rectTransform2);
+        FindClosestEnemy();
         //FindDistance();
         if (Input.GetMouseButtonDown(0))
         {
@@ -193,8 +218,10 @@ public class CameraEngine : MonoBehaviour
 
                     Debug.Log("distanceint" + distanceInt);
                     target = hitInfo.collider.gameObject.transform;
+                    Debug.Log("select" + _selecting.GetComponents<RectTransform>().GetValue((int)_selecting.rect.x));
+                    newPos2 = target.transform.position;
                     infomationPanel.gameObject.SetActive(true);
-                    infomationPanel.anchoredPosition = target.transform.position;
+                    infomationPanel.anchoredPosition = new Vector2(target.transform.position.x, target.transform.position.y);
                     cam1.SetActive(false);
                     cam2.SetActive(false);
                     cam3.SetActive(false);
@@ -313,13 +340,13 @@ public class CameraEngine : MonoBehaviour
 
     public void SetDimensions(Vector2 position)
     {
-        RectTransform rt = infomationPanel.GetComponent<RectTransform>();
-        rt.anchoredPosition = position;
-        Debug.Log(position + " " + rt.anchoredPosition);
-        Debug.Log("rtposition" + position);
+        //RectTransform rt = infomationPanel.GetComponent<RectTransform>();
+        //rt.anchoredPosition = position;
+        //Debug.Log(position + " " + rt.anchoredPosition);
+        //Debug.Log("rtposition" + position);
     }
 
-    private void FindClosestEnemy(object position)
+    private void FindClosestEnemy()
     {
         float distanceToClosestNpc = Mathf.Infinity;
 
@@ -365,11 +392,11 @@ public class CameraEngine : MonoBehaviour
                         Debug.Log("game[i]" + _gameObj[i]); _gameObj[i].GetComponentInChildren<SpriteRenderer>().sortingOrder = -1;
                     }
                     Debug.Log("來到這邊了");
-                    Vector3 newPos = closestNpc.transform.position;
-                    rectTransform.anchoredPosition = newPos;
-                    SetDimensions(Vector2.zero);
+                    Vector2 newPos = closestNpc.transform.position;
+                    rectTransform.anchoredPosition = new Vector2(newPos.x, newPos.y);
+
                     talkColor.color = new Color(255, 255, 255, 255);
-                    Debug.Log("color" + talkColor.color);
+                    Debug.Log("color" + talkColor.color + "recttransform anchoreposition" + rectTransform.anchoredPosition + "newPos" + newPos);
                     lineRender.SetPosition(0, new Vector3(closestNpc.transform.position.x, closestNpc.transform.position.y, 0f));
                     lineRender.SetPosition(1, new Vector3(_yushan.transform.position.x, _yushan.transform.position.y, 0f));
 
@@ -409,9 +436,9 @@ public class CameraEngine : MonoBehaviour
                 distanceText.text = closestNpc.name.ToString() + ":" + distanceInt.ToString() + "M";
                 if (distanceInt == 0)
                 {
-
+                    Vector2 newPos = closestNpc.transform.position;
                     talkColor.color = new Color(255, 255, 255, 255);
-                    rectTransform.anchoredPosition = closestNpc.transform.position;
+                    rectTransform.anchoredPosition = new Vector2(newPos.x, newPos.y);
                     distanceText.text = closestNpc.name.ToString() + ":" + distanceInt.ToString() + "M";
                     Debug.Log("distance == 0" + talkColor.color);
                 }
@@ -603,5 +630,64 @@ public class CameraEngine : MonoBehaviour
 
     //    }
     //}
+
+
+
+
+    void OnEnable()
+    {
+        StartCoroutine("UIcoroutine");
+    }
+
+    void OnDisable()
+    {
+        StopCoroutine("UIcoroutine");
+
+        clickHandGameObject.anchoredPosition = new Vector2(_yushan.transform.position.x, _yushan.transform.position.y);
+        holdingHandGameObject.anchoredPosition = new Vector2(_yushan.transform.position.x, _yushan.transform.position.y);
+
+        clickHandGameObject.gameObject.SetActive(true);
+        holdingHandGameObject.gameObject.SetActive(true);
+    }
+
+    private IEnumerator UIcoroutine()
+    {
+
+        clickHandGameObject.gameObject.SetActive(false);
+
+        while (true)
+        {
+            yield return new WaitForSeconds(1f);
+            clickHandGameObject.gameObject.SetActive(true);
+            holdingHandGameObject.gameObject.SetActive(false);
+
+
+            while (Vector2.Distance(clickHandGameObject.anchoredPosition, targetGameObject.transform.position) > 1f)
+            {
+
+                clickHandGameObject.anchoredPosition = Vector2.MoveTowards(clickHandGameObject.anchoredPosition, targetGameObject.transform.position, Time.deltaTime * speed);
+
+                yield return new WaitForSeconds(0.02f);
+            }
+
+            clickHandGameObject.anchoredPosition = new Vector2(targetGameObject.transform.position.x, targetGameObject.transform.position.y);
+            clickHandGameObject.gameObject.SetActive(false);
+            holdingHandGameObject.anchoredPosition = new Vector2(targetGameObject.transform.position.x, targetGameObject.transform.position.y);
+            holdingHandGameObject.gameObject.SetActive(true);
+
+            yield return new WaitForSeconds(1f);
+
+            clickHandGameObject.gameObject.SetActive(false);
+            holdingHandGameObject.gameObject.SetActive(false);
+            yield return new WaitForSeconds(1f);
+
+            clickHandGameObject.anchoredPosition = startHandPosition;
+            clickHandGameObject.gameObject.SetActive(false);
+            holdingHandGameObject.anchoredPosition = startHandPosition;
+            holdingHandGameObject.gameObject.SetActive(true);
+
+        }
+
+    }
 }
 
