@@ -58,6 +58,26 @@ TagManager:
   - talk
   - virtual-ground
   - cam4
+  - equiped-item
+  - tool
+  - tool-effect
+  - extinquisher-line
+  - extinquisher-control
+  - extinguisher-water
+  - canvas-ui
+  - canvas-ui-panel1
+  - canvas-ui-panel2
+  - city-view
+  - default-view
+  - closeup-view
+  - body
+  - hair
+  - hats
+  - shirts
+  - pants
+  - shoes
+  - euiqppeditem
+  - arms
   layers:
   - Default
   - TransparentFX
@@ -107,9 +127,6 @@ TagManager:
   - name: tools
     uniqueID: 2336323031
     locked: 0
-  - name: items
-    uniqueID: 695854003
-    locked: 0
   - name: edm
     uniqueID: 1854000375
     locked: 0
@@ -118,6 +135,9 @@ TagManager:
     locked: 0
   - name: people
     uniqueID: 4070808269
+    locked: 0
+  - name: items
+    uniqueID: 695854003
     locked: 0
   - name: trees
     uniqueID: 46519161
@@ -136,4 +156,7 @@ TagManager:
     locked: 0
   - name: camera
     uniqueID: 2019632535
+    locked: 0
+  - name: instancese
+    uniqueID: 3449812623
     locked: 0

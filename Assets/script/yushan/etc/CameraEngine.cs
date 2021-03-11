@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Cinemachine;
 using System.Linq;
 using System;
+using UnityEngine.EventSystems;
 
 public class CameraEngine : MonoBehaviour
 {
@@ -41,18 +42,13 @@ public class CameraEngine : MonoBehaviour
     private Transform _yushan;
 
     [SerializeField]
-    private GameObject zoomIn;
-    // check if zoom in
-    private bool isZoomIn = false;
-    //check how many times clicked zoom in
-    private int zoomInClickedTimes = 0;
+    private GameObject CloseUpView;
 
     [SerializeField]
-    private GameObject zoomOut;
-    // check if zoom out
-    private bool isZoomOut = false;
-    // check how many times clicked zoom out
-    private int zoomOutClickedTimes = 0;
+    private GameObject CityView;
+
+    [SerializeField]
+    private GameObject DefaultView;
 
     [SerializeField]
     private Text distanceText;
@@ -66,17 +62,16 @@ public class CameraEngine : MonoBehaviour
 
 
 
-    public RectTransform holdingHandGameObject;
 
 
 
-    public RectTransform clickHandGameObject;
 
-    public GameObject targetGameObject;
-    public RectTransform rectTransform2;
-    private Vector2 startHandPosition;
-    private float speed = 1000f;
-    private Vector2 newPos2;
+
+
+
+
+
+
 
 
 
@@ -103,22 +98,7 @@ public class CameraEngine : MonoBehaviour
     private RectTransform _rectTransform;
     private Image _image;
     private Animator _animator;
-    //default field of view static
-    public static float defaultFieldOfView = 93f;
-    // default camera offset x
-    public static float defaultOffsetX = 2f;
-    public static float defaultOffsetZ = -3f;
-    public static float defaultOffsetY = 1;
 
-    //default select target field of view
-    public static float selectedFieldOfView = 39f;
-    public static float selectedOffsetX = 0f;
-    public static float selectedOffsetY = 0f;
-    public static float selectedOffsetZ = -3f;
-    //default orthographicsize
-    public static float defaultOrthographicSize = 4.8725f;
-    //default selected orthgraphicsize
-    public static float selectedOrthographicSize = 1f;
 
     //static canvas talk option
     public RectTransform rectTransform;
@@ -128,9 +108,7 @@ public class CameraEngine : MonoBehaviour
     [SerializeField]
     private RectTransform infomationPanel;
 
-    //zoomin clicks
-    private int clicks = 0;
-    private int zoomOutClicks = 0;
+
     private void Init()
     {
         //findclosetenemy getcomponent
@@ -144,27 +122,27 @@ public class CameraEngine : MonoBehaviour
         transposer = targetCam.GetCinemachineComponent<CinemachineTransposer>();
         //cinemachinBrain
         cinemachineBrain = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CinemachineBrain>();
-        talkColor = GameObject.FindGameObjectWithTag("talk").GetComponent<Image>();
-        rectTransform2 = transform.GetComponent<RectTransform>();
+
+
 
 
         if (targetCam == null)
         {
             Debug.Log("targetcam is null");
         }
-        Debug.Log("rectransform2" + rectTransform2);
+
     }
     private void Awake()
     {
         Init();
-        rectTransform2 = (transform as RectTransform);
 
 
-        transposer.m_FollowOffset.x = defaultOffsetX;
-        transposer.m_FollowOffset.y = defaultOffsetY;
-        transposer.m_FollowOffset.z = defaultOffsetZ;
-        targetCam.m_Lens.OrthographicSize = defaultOrthographicSize;
-        startHandPosition = clickHandGameObject.anchoredPosition;
+
+        transposer.m_FollowOffset.x = SingletonDefaultCamera.defaultOffsetX;
+        transposer.m_FollowOffset.y = SingletonDefaultCamera.defaultOffsetY;
+        transposer.m_FollowOffset.z = SingletonDefaultCamera.defaultOffsetZ;
+        targetCam.m_Lens.OrthographicSize = SingletonDefaultCamera.defaultOrthographicSize;
+
     }
     private void Start()
     {
@@ -199,14 +177,20 @@ public class CameraEngine : MonoBehaviour
     }
     private void Update()
     {
-        Debug.Log("rec2" + rectTransform2);
+        Physics2D.queriesHitTriggers = false;
         FindClosestEnemy();
+    }
+    private void FixedUpdate()
+    {
+
+        Physics2D.queriesHitTriggers = true;
         //FindDistance();
         if (Input.GetMouseButtonDown(0))
         {
 
             Vector2 worldPoint = camera.ScreenToWorldPoint(Input.mousePosition);
-
+            Vector3 screenPos = camera.WorldToScreenPoint((Vector3)spriteRenderer.transform.position);
+            var canvas = GameObject.Find("Canvas");
             RaycastHit2D hitInfo = Physics2D.Raycast(worldPoint, Vector2.zero);
             //Instantiate(_yushan, worldPoint, _yushan.rotation);
             if (hitInfo.collider != null)
@@ -218,22 +202,22 @@ public class CameraEngine : MonoBehaviour
 
                     Debug.Log("distanceint" + distanceInt);
                     target = hitInfo.collider.gameObject.transform;
-                    Debug.Log("select" + _selecting.GetComponents<RectTransform>().GetValue((int)_selecting.rect.x));
-                    newPos2 = target.transform.position;
+                    //Debug.Log("select" + _selecting.GetComponents<RectTransform>().GetValue((int)_selecting.rect.x));
+                    _selecting.anchoredPosition = Vector3.zero;
                     infomationPanel.gameObject.SetActive(true);
-                    infomationPanel.anchoredPosition = new Vector2(target.transform.position.x, target.transform.position.y);
+
                     cam1.SetActive(false);
                     cam2.SetActive(false);
                     cam3.SetActive(false);
                     targetCam.gameObject.SetActive(true);
                     targetCam.m_Follow = target;
-                    targetCam.m_Lens.OrthographicSize = selectedOrthographicSize;
+                    targetCam.m_Lens.OrthographicSize = SingletonDefaultCamera.selectedOrthographicSize;
 
                     Debug.Log("cam1 and targetcam" + cam1.activeInHierarchy +
                         "tarhetcam" + targetCam.gameObject.active);
-                    transposer.m_FollowOffset.y = selectedOffsetY;
-                    transposer.m_FollowOffset.x = selectedOffsetX;
-                    transposer.m_FollowOffset.z = selectedOffsetZ;
+                    transposer.m_FollowOffset.y = SingletonDefaultCamera.selectedOffsetY;
+                    transposer.m_FollowOffset.x = SingletonDefaultCamera.selectedOffsetX;
+                    transposer.m_FollowOffset.z = SingletonDefaultCamera.selectedOffsetZ;
                     //if (distanceInt <= 0)
                     //{
 
@@ -257,7 +241,7 @@ public class CameraEngine : MonoBehaviour
 
 
                 }
-                if (hitInfo.collider.tag != "npc") ;
+                if (hitInfo.collider.tag != "npc" || hitInfo.collider.tag == null)
                 {
                     Debug.Log("hitinfo.collider.tag" + hitInfo.collider.tag);
                     target = none;
@@ -265,11 +249,16 @@ public class CameraEngine : MonoBehaviour
                     //transposer.m_FollowOffset.y = defaultOffsetY;
                     //transposer.m_FollowOffset.z = defaultOffsetZ;
                     //cam1.m_Lens.OrthographicSize = defaultOrthographicSize;
-                    vcam.gameObject.SetActive(false);
-                    cam1.SetActive(false);
+
+                    targetCam.gameObject.SetActive(false);
+                    cam1.SetActive(true);
+
                     cam1.GetComponent<CinemachineVirtualCamera>().m_Follow = _yushan;
-                    targetCam.gameObject.SetActive(true);
+
                     Debug.Log("cameraEngine update else" + target);
+
+
+
                 }
 
             }
@@ -374,29 +363,14 @@ public class CameraEngine : MonoBehaviour
 
                     //distanceText.text = distanceToClosestNpc.ToString() + "M";
 
-                    if (closestNpc.transform.position.y > _yushan.transform.position.y)
-                    {
-                        spriteRenderer.sortingOrder = 1;
-                    }
-                    if (closestNpc.transform.position.y < _yushan.transform.position.y)
-                    {
-                        spriteRenderer.sortingOrder = -1;
-                    }
-                    if (closestNpc.transform.position.y > _gameObj[i].transform.position.y)
-                    {
-                        Debug.Log("_sp[a]");
-                        _gameObj[i].GetComponentInChildren<SpriteRenderer>().sortingOrder = 1;
-                    }
-                    if (closestNpc.transform.position.y < _gameObj[i].transform.position.y)
-                    {
-                        Debug.Log("game[i]" + _gameObj[i]); _gameObj[i].GetComponentInChildren<SpriteRenderer>().sortingOrder = -1;
-                    }
-                    Debug.Log("來到這邊了");
-                    Vector2 newPos = closestNpc.transform.position;
-                    rectTransform.anchoredPosition = new Vector2(newPos.x, newPos.y);
 
-                    talkColor.color = new Color(255, 255, 255, 255);
-                    Debug.Log("color" + talkColor.color + "recttransform anchoreposition" + rectTransform.anchoredPosition + "newPos" + newPos);
+
+                    Debug.Log("來到這邊了");
+
+
+
+
+
                     lineRender.SetPosition(0, new Vector3(closestNpc.transform.position.x, closestNpc.transform.position.y, 0f));
                     lineRender.SetPosition(1, new Vector3(_yushan.transform.position.x, _yushan.transform.position.y, 0f));
 
@@ -406,7 +380,7 @@ public class CameraEngine : MonoBehaviour
                 }
                 else
                 {
-                    talkColor.color = new Color(255, 255, 255, 0);
+                    Debug.Log("ha");
                 }
 
 
@@ -437,17 +411,15 @@ public class CameraEngine : MonoBehaviour
                 if (distanceInt == 0)
                 {
                     Vector2 newPos = closestNpc.transform.position;
-                    talkColor.color = new Color(255, 255, 255, 255);
+
                     rectTransform.anchoredPosition = new Vector2(newPos.x, newPos.y);
                     distanceText.text = closestNpc.name.ToString() + ":" + distanceInt.ToString() + "M";
-                    Debug.Log("distance == 0" + talkColor.color);
+
                 }
                 if (distanceInt >= 1)
                 {
 
-                    talkColor.color = new Color(255, 255, 255, 0);
-                    distanceText.text = closestNpc.name.ToString() + ":" + distanceInt.ToString() + "M";
-                    Debug.Log("distance > 1" + talkColor.color);
+
                 }
             }
             else if (closestNpc == null)
@@ -458,56 +430,31 @@ public class CameraEngine : MonoBehaviour
         }
     }
 
-    private void OnMouseOver()
-    {
-        Debug.Log("onmouseover" + this.gameObject);
 
-        if (this.gameObject.tag == "npc")
-        {
-            Debug.Log("over npc");
-            selectingAnimations.Selecting();
-        }
-    }
-    private void OnMouseExit()
+    public void CityOfView()
     {
+        Debug.Log("cityview cam2");
 
-        Debug.Log("onmouseexit" + this.gameObject.tag);
-        if (this.gameObject.tag == "npc")
+        if (CityView.tag == "city-view")
         {
-            Debug.Log("exit npc");
-            selectingAnimations.NotSelect();
+
+            cam2.SetActive(true);
+            cam1.SetActive(false);
+            cam3.SetActive(false);
+            targetCam.gameObject.SetActive(false);
+
         }
 
     }
-    public void ZoomOut()
+
+
+    public void OnMouseEnter(BaseEventData data)
     {
-        Debug.Log("zoomout" + zoomOutClicks);
-
-        if (zoomOut.tag == "zoom-out")
-        {
-            zoomOutClicks += 1;
-            switch (clicks)
-            {
-
-
-                case 1:
-                    cam2.SetActive(true);
-                    cam1.SetActive(false);
-                    cam3.SetActive(false);
-                    break;
-
-                default:
-                    Debug.Log("clicks" + zoomOutClicks);
-                    break;
-
-            }
-            if (zoomOutClicks == 1) zoomOutClicks = 0;
-            Debug.Log("clicks" + zoomOutClicks);
-        }
-
-
-
+        PointerEventData p = data as PointerEventData;
+        Debug.Log("Enter Position : " + p.position);
     }
+
+
     //public void ZoomOut()
     //{
     //    int zoomOutBackToZero = 0;
@@ -547,36 +494,17 @@ public class CameraEngine : MonoBehaviour
     //    }
 
     //}
-    public void ZoomIn()
+    public void DefaultOfView()
     {
 
-        Debug.Log("zoomin" + clicks);
 
-        if (zoomIn.tag == "zoom-in")
-        {
-            clicks += 1;
-            switch (clicks)
-            {
-                case 1:
-                    cam1.SetActive(false);
-                    cam2.SetActive(false);
-                    cam3.SetActive(true);
-                    break;
-                case 2:
-                    cam1.SetActive(true);
-                    cam2.SetActive(false);
-                    cam3.SetActive(false);
-                    break;
-                default:
-                    Debug.Log("default" + clicks);
-                    break;
-            }
-            if (clicks == 2)
-            {
-                clicks = 0;
-            }
-            Debug.Log("clicks" + clicks);
-        }
+
+        if (DefaultView.tag == "default-view")
+
+            cam1.SetActive(true);
+        cam2.SetActive(false);
+        cam3.SetActive(false);
+        targetCam.gameObject.SetActive(false);
 
 
     }
@@ -632,62 +560,17 @@ public class CameraEngine : MonoBehaviour
     //}
 
 
-
-
-    void OnEnable()
+    public void CloseUpOfView()
     {
-        StartCoroutine("UIcoroutine");
-    }
-
-    void OnDisable()
-    {
-        StopCoroutine("UIcoroutine");
-
-        clickHandGameObject.anchoredPosition = new Vector2(_yushan.transform.position.x, _yushan.transform.position.y);
-        holdingHandGameObject.anchoredPosition = new Vector2(_yushan.transform.position.x, _yushan.transform.position.y);
-
-        clickHandGameObject.gameObject.SetActive(true);
-        holdingHandGameObject.gameObject.SetActive(true);
-    }
-
-    private IEnumerator UIcoroutine()
-    {
-
-        clickHandGameObject.gameObject.SetActive(false);
-
-        while (true)
+        if (CloseUpView.tag == "closeup-view")
         {
-            yield return new WaitForSeconds(1f);
-            clickHandGameObject.gameObject.SetActive(true);
-            holdingHandGameObject.gameObject.SetActive(false);
-
-
-            while (Vector2.Distance(clickHandGameObject.anchoredPosition, targetGameObject.transform.position) > 1f)
-            {
-
-                clickHandGameObject.anchoredPosition = Vector2.MoveTowards(clickHandGameObject.anchoredPosition, targetGameObject.transform.position, Time.deltaTime * speed);
-
-                yield return new WaitForSeconds(0.02f);
-            }
-
-            clickHandGameObject.anchoredPosition = new Vector2(targetGameObject.transform.position.x, targetGameObject.transform.position.y);
-            clickHandGameObject.gameObject.SetActive(false);
-            holdingHandGameObject.anchoredPosition = new Vector2(targetGameObject.transform.position.x, targetGameObject.transform.position.y);
-            holdingHandGameObject.gameObject.SetActive(true);
-
-            yield return new WaitForSeconds(1f);
-
-            clickHandGameObject.gameObject.SetActive(false);
-            holdingHandGameObject.gameObject.SetActive(false);
-            yield return new WaitForSeconds(1f);
-
-            clickHandGameObject.anchoredPosition = startHandPosition;
-            clickHandGameObject.gameObject.SetActive(false);
-            holdingHandGameObject.anchoredPosition = startHandPosition;
-            holdingHandGameObject.gameObject.SetActive(true);
-
+            cam1.SetActive(false);
+            cam2.SetActive(false);
+            cam3.SetActive(true);
+            targetCam.gameObject.SetActive(false);
         }
-
     }
+
+
 }
 

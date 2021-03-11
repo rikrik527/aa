@@ -1,11 +1,11 @@
-using System;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 using UnityEngine;
 
 
-namespace UnityStandardAssets.CrossPlatformInput
+namespace Standard_Assets.CrossPlatformInput.Scripts
 {
     [ExecuteInEditMode]
     public class MobileControlRig : MonoBehaviour

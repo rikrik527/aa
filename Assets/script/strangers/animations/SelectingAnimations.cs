@@ -11,6 +11,7 @@ public class SelectingAnimations : MonoBehaviour
     }
     public void Selecting()
     {
+        Debug.Log("selecting");
         _animator.SetTrigger("selecting-trigger");
         _animator.SetBool("not-select", false);
     }

@@ -5,27 +5,15 @@ using UnityEngine.UI;
 using Cinemachine;
 public class ExitInformation : MonoBehaviour
 {
-    private static ExitInformation exitInfo;
 
-    public static ExitInformation ExitInfo
-    {
-        get
-        {
-            if (exitInfo != null)
-            {
-                Debug.Log("exit" + exitInfo);
-                throw new System.Exception();
-            }
-            return exitInfo;
-        }
-    }
     [SerializeField]
     private Canvas canvas;
-
-    public GameObject informationPanel;
+    [SerializeField]
+    private GameObject informationPanel;
     private Button _exit;
 
     private SelectingAnimations _selectingAnimations;
+    [SerializeField]
     private CinemachineVirtualCamera targetCam;
     private CinemachineTransposer transposer;
     //cam1
@@ -38,38 +26,67 @@ public class ExitInformation : MonoBehaviour
     //yushan
     [SerializeField]
     private Transform _yushan;
-
+    public CameraEngine cameraEnine;
     private CinemachineCameraOffset camraOffset;
+
+    //rect trasform informationpanel
+    [SerializeField]
+    private RectTransform recInfoMation;
+
 
 
     private void Init()
     {
         targetCam = GameObject.FindGameObjectWithTag("cam4").GetComponent<CinemachineVirtualCamera>();
-
+        transposer = targetCam.GetCinemachineComponent<CinemachineTransposer>();
         _selectingAnimations = GameObject.FindGameObjectWithTag("select").GetComponent<SelectingAnimations>();
+
+        if (informationPanel != null)
+        {
+
+            recInfoMation.localScale = new Vector3(0f, 0f, 1f);
+
+
+
+        }
+
     }
     private void Awake()
     {
+
+
         Init();
 
     }
     public void Exit()
     {
-        informationPanel.SetActive(false);
-
-        targetCam.m_Follow = null;
-        targetCam.m_Lens.OrthographicSize = CameraEngine.defaultFieldOfView;
-        transposer.m_FollowOffset.x = CameraEngine.defaultOffsetX;
-        transposer.m_FollowOffset.y = CameraEngine.defaultOffsetY;
-        transposer.m_FollowOffset.z = CameraEngine.defaultOffsetZ;
-        if (targetCam.isActiveAndEnabled == false)
+        if (transposer == null)
         {
-            Debug.Log("cam1.isactiveandenabled == false");
-            targetCam.enabled = true;
-            cam1.SetActive(true);
-            cam2.SetActive(false);
-            cam3.SetActive(false);
+            Debug.Log("]nukll");
         }
+        targetCam.m_Follow = null;
+        if (transposer == null)
+        {
+            Debug.Log("transdposer ==  nukll");
+        }
+        targetCam.m_Lens.OrthographicSize = SingletonDefaultCamera.defaultOrthographicSize;
+        Debug.Log("transposer" + transposer);
+        transposer.m_FollowOffset.x = SingletonDefaultCamera.defaultOffsetX;
+        transposer.m_FollowOffset.y = SingletonDefaultCamera.defaultOffsetY;
+        transposer.m_FollowOffset.z = SingletonDefaultCamera.defaultOffsetZ;
+        cam1.SetActive(true);
+        targetCam.gameObject.SetActive(false);
+
+
+
+
+        recInfoMation.localScale = new Vector3(0f, 0f, 1f);
+        recInfoMation.gameObject.SetActive(false);
+
+
+
+
+
     }
 
 
