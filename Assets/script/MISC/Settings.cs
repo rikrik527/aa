@@ -3,6 +3,14 @@ using UnityEngine;
 
 public static class Settings
 {
+    //obscuring item fading obscuringitemfader
+    public const float fadeInSeconds = 0.24f;
+    public const float fadeOutSeconds = 0.36f;
+    public const float targetAlpha = 0.45f;
+
+
+
+
     //player movement speed
     public static float runningSpeed = 5.333f;
     public static float walkingSpeed = 2.666f;
@@ -66,18 +74,18 @@ public static class Settings
     //public static int isHairDown;
     //public static int isHairRight;
     //public static int isHairLeft;
-
+    public static int isBagDown;
     // share animations paramater
-    public static int isIdleUp;
-    public static int isIdleDown;
-    public static int isIdleRight;
-    public static int isIdleLeft;
+    public static int idleUp;
+    public static int idleDown;
+    public static int idleRight;
+    public static int idleLeft;
 
     static Settings()
     {
         //static constuctor
 
-
+        Debug.Log("settings run");
         movementX = Animator.StringToHash("movementX");
         movementY = Animator.StringToHash("movementY");
         isWalking = Animator.StringToHash("isWalking");
@@ -137,11 +145,12 @@ public static class Settings
         //isHairDown = Animator.StringToHash("isHairDown");
         //isHairRight = Animator.StringToHash("isHairRight");
         //isHairLeft = Animator.StringToHash("isHairLeft");
-
+        isBagDown = Animator.StringToHash("isBagDown");
         //shared animation
-        isIdleUp = Animator.StringToHash("isIdleUp");
-        isIdleDown = Animator.StringToHash("isIdleDown");
-        isIdleRight = Animator.StringToHash("isIdleRight");
-        isIdleLeft = Animator.StringToHash("isIdleLeft");
+        idleUp = Animator.StringToHash("idleUp");
+        idleDown = Animator.StringToHash("idleDown");
+        idleRight = Animator.StringToHash("idleRight");
+        idleLeft = Animator.StringToHash("idleLeft");
+        Debug.Log("idleup at setting" + idleUp);
     }
 }

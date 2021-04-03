@@ -78,6 +78,8 @@ TagManager:
   - shoes
   - euiqppeditem
   - arms
+  - bounding-confiner
+  - bags
   layers:
   - Default
   - TransparentFX
@@ -159,4 +161,7 @@ TagManager:
     locked: 0
   - name: instancese
     uniqueID: 3449812623
+    locked: 0
+  - name: ui
+    uniqueID: 4173429799
     locked: 0

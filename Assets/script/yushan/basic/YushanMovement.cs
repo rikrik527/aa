@@ -63,6 +63,8 @@ public class YushanMovement : SingletonYushanBasic<YushanMovement>
     //private bool isHairRight;
     //private bool isHairLeft;
 
+    private bool isBagDown;
+
     // share animations paramater
     //public static int isIdleRight;
     //public static int isIdleLeft;
@@ -135,6 +137,7 @@ public class YushanMovement : SingletonYushanBasic<YushanMovement>
  //isHairDown,
  //isHairRight,
  //isHairLeft,
+ isBagDown,
  false, false, false, false);
     }
 
@@ -175,6 +178,7 @@ public class YushanMovement : SingletonYushanBasic<YushanMovement>
         //isSittingDown = false;
         //isCrying = false;
         toolEffect = ToolEffect.none;
+        Debug.Log("animations reset");
     }
     private void PlayerMovementInput()
     {

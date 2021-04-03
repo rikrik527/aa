@@ -43,9 +43,9 @@ public delegate void MovementDelegate(float movementX, float movementY, bool isW
 //bool isHairDown,
 //bool isHairRight,
 //bool isHairLeft,
-
-bool isIdleUp, bool isIdleDown,
-bool isIdleRight, bool isIdleLeft);
+bool isBagDown,
+bool idleUp, bool idleDown,
+bool idleRight, bool idleLeft);
 
 
 public static class EventsHandler
@@ -69,42 +69,44 @@ public static class EventsHandler
     bool isSwingingToolUp, bool isSwingingToolDown,
     bool isSwingingToolRight, bool isSwingingToolLeft,
 
-//    bool isBumpInto,
-//bool isCommanding,
-//bool isSittingDown,
-//bool isCrying,
+    //    bool isBumpInto,
+    //bool isCommanding,
+    //bool isSittingDown,
+    //bool isCrying,
 
-//bool isShirtUp,
-//bool isShirtDown,
-//bool isShirtRight,
-//bool isShirtLeft,
+    //bool isShirtUp,
+    //bool isShirtDown,
+    //bool isShirtRight,
+    //bool isShirtLeft,
 
-//bool isPantsUp,
-//bool isPantsDown,
-//bool isPantsRIght,
-//bool isPantsLeft,
+    //bool isPantsUp,
+    //bool isPantsDown,
+    //bool isPantsRIght,
+    //bool isPantsLeft,
 
-//bool isShoesUp,
-//bool isShoesDown,
-//bool isShoesRight,
-//bool isShoesLeft,
+    //bool isShoesUp,
+    //bool isShoesDown,
+    //bool isShoesRight,
+    //bool isShoesLeft,
 
-//bool isHatsUp,
-//bool isHatsDown,
-//bool isHatsRight,
-//bool isHatsLeft,
+    //bool isHatsUp,
+    //bool isHatsDown,
+    //bool isHatsRight,
+    //bool isHatsLeft,
 
-//bool isHairUp,
-//bool isHairDown,
-//bool isHairRight,
-//bool isHairLeft,
+    //bool isHairUp,
+    //bool isHairDown,
+    //bool isHairRight,
+    //bool isHairLeft,
 
-bool isIdleUp, bool isIdleDown,
-bool isIdleRight, bool isIdleLeft)
+    bool isBagDown,
+bool idleUp, bool idleDown,
+bool idleRight, bool idleLeft)
     {
-        Debug.Log("callmovementevent");
+
+        Debug.Log("call movementevent");
         if (MovementEvent != null)
-            Debug.Log("MovementEvent is not null");
+            Debug.Log("MovementEvent is not null" + MovementEvent);
         MovementEvent(movementX, movementY, isWalking, isRunning, isIdle, isCarrying, toolEffect,
          isUsingToolUp, isUsingToolDown,
      isUsingToolRight, isUsingToolLeft,
@@ -147,9 +149,9 @@ bool isIdleRight, bool isIdleLeft)
  //isHairDown,
  //isHairRight,
  //isHairLeft,
-
- isIdleUp, isIdleDown,
- isIdleRight, isIdleLeft);
+ isBagDown,
+ idleUp, idleDown,
+ idleRight, idleLeft);
 
     }
 }

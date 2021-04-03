@@ -9,180 +9,198 @@ AnimatorController:
   m_Name: hat
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: yInput
+  - m_Name: movementY
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
-  - m_Name: xInput
+    m_Controller: {fileID: 0}
+  - m_Name: movementX
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: isWalking
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: isRunning
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: toolEffect
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: isUsingToolUp
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: isUsingToolDown
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: isUsingToolRight
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: isUsingToolLeft
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: isSwingingToolUp
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: isSwingingToolDown
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: isSwingingToolRight
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: isSwingingToolLeft
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: isLiftingToolUp
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: isLiftingToolDown
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: isLiftingToolRight
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: isLiftingToolLeft
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: isHoldingToolUp
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: isHoldingToolDown
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: isHoldingToolRight
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: isHoldingToolLeft
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: isPickingUp
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: isPickingDown
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: isPickingRight
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: isPickingLeft
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: idleUp
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: idleDown
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: idleLeft
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: idleRight
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
+  - m_Name: isBagDown
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: isIdle
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: isCarrying
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -677,7 +695,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 4
-    m_ConditionEvent: yInput
+    m_ConditionEvent: movementY
     m_EventTreshold: -0.01
   - m_ConditionMode: 1
     m_ConditionEvent: isRunning
@@ -780,7 +798,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 4
-    m_ConditionEvent: yInput
+    m_ConditionEvent: movementY
     m_EventTreshold: -0.01
   - m_ConditionMode: 1
     m_ConditionEvent: isWalking
@@ -830,7 +848,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 4
-    m_ConditionEvent: xInput
+    m_ConditionEvent: movementX
     m_EventTreshold: 0.01
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102498804213188922}
@@ -855,7 +873,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 4
-    m_ConditionEvent: yInput
+    m_ConditionEvent: movementY
     m_EventTreshold: -0.01
   - m_ConditionMode: 1
     m_ConditionEvent: isRunning
@@ -883,7 +901,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 4
-    m_ConditionEvent: yInput
+    m_ConditionEvent: movementY
     m_EventTreshold: -0.01
   - m_ConditionMode: 1
     m_ConditionEvent: isWalking
@@ -911,7 +929,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: xInput
+    m_ConditionEvent: movementX
     m_EventTreshold: 0.01
   - m_ConditionMode: 1
     m_ConditionEvent: isWalking
@@ -989,7 +1007,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: xInput
+    m_ConditionEvent: movementX
     m_EventTreshold: 0.01
   - m_ConditionMode: 1
     m_ConditionEvent: isRunning
@@ -1042,7 +1060,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 4
-    m_ConditionEvent: yInput
+    m_ConditionEvent: movementY
     m_EventTreshold: 0.01
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102802030401212310}
@@ -1067,7 +1085,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 4
-    m_ConditionEvent: xInput
+    m_ConditionEvent: movementX
     m_EventTreshold: -0.01
   - m_ConditionMode: 1
     m_ConditionEvent: isWalking
@@ -1095,7 +1113,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: xInput
+    m_ConditionEvent: movementX
     m_EventTreshold: 0.01
   - m_ConditionMode: 1
     m_ConditionEvent: isWalking
@@ -1145,7 +1163,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: yInput
+    m_ConditionEvent: movementY
     m_EventTreshold: -0.01
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102276945431684212}
@@ -1317,7 +1335,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 4
-    m_ConditionEvent: yInput
+    m_ConditionEvent: movementY
     m_EventTreshold: -0.01
   - m_ConditionMode: 1
     m_ConditionEvent: isRunning
@@ -1345,7 +1363,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: xInput
+    m_ConditionEvent: movementX
     m_EventTreshold: -0.01
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102221425285379766}
@@ -1417,7 +1435,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: xInput
+    m_ConditionEvent: movementX
     m_EventTreshold: 0.01
   - m_ConditionMode: 1
     m_ConditionEvent: isRunning
@@ -1545,7 +1563,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 4
-    m_ConditionEvent: xInput
+    m_ConditionEvent: movementX
     m_EventTreshold: -0.01
   - m_ConditionMode: 1
     m_ConditionEvent: isRunning
@@ -1573,7 +1591,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: yInput
+    m_ConditionEvent: movementY
     m_EventTreshold: 0.01
   - m_ConditionMode: 1
     m_ConditionEvent: isRunning
@@ -1789,7 +1807,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: xInput
+    m_ConditionEvent: movementX
     m_EventTreshold: 0.01
   - m_ConditionMode: 1
     m_ConditionEvent: isWalking
@@ -1839,7 +1857,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: yInput
+    m_ConditionEvent: movementY
     m_EventTreshold: -0.01
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102276945431684212}
@@ -1889,7 +1907,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: xInput
+    m_ConditionEvent: movementX
     m_EventTreshold: 0.01
   - m_ConditionMode: 1
     m_ConditionEvent: isRunning
@@ -1942,7 +1960,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: yInput
+    m_ConditionEvent: movementY
     m_EventTreshold: 0.01
   - m_ConditionMode: 1
     m_ConditionEvent: isRunning
@@ -1995,7 +2013,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: xInput
+    m_ConditionEvent: movementX
     m_EventTreshold: -0.01
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102221425285379766}
@@ -2020,7 +2038,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: yInput
+    m_ConditionEvent: movementY
     m_EventTreshold: 0.01
   - m_ConditionMode: 1
     m_ConditionEvent: isRunning
@@ -2048,7 +2066,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: yInput
+    m_ConditionEvent: movementY
     m_EventTreshold: 0.01
   - m_ConditionMode: 1
     m_ConditionEvent: isWalking
@@ -2170,7 +2188,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 4
-    m_ConditionEvent: xInput
+    m_ConditionEvent: movementX
     m_EventTreshold: -0.01
   - m_ConditionMode: 1
     m_ConditionEvent: isRunning
@@ -2539,7 +2557,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 4
-    m_ConditionEvent: xInput
+    m_ConditionEvent: movementX
     m_EventTreshold: -0.01
   - m_ConditionMode: 1
     m_ConditionEvent: isWalking
@@ -2617,7 +2635,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 4
-    m_ConditionEvent: xInput
+    m_ConditionEvent: movementX
     m_EventTreshold: 0.01
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102498804213188922}
@@ -2642,7 +2660,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: xInput
+    m_ConditionEvent: movementX
     m_EventTreshold: 0.01
   - m_ConditionMode: 1
     m_ConditionEvent: isRunning
@@ -2745,7 +2763,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 4
-    m_ConditionEvent: xInput
+    m_ConditionEvent: movementX
     m_EventTreshold: -0.01
   - m_ConditionMode: 1
     m_ConditionEvent: isRunning
@@ -2948,7 +2966,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: xInput
+    m_ConditionEvent: movementX
     m_EventTreshold: 0.01
   - m_ConditionMode: 1
     m_ConditionEvent: isWalking
@@ -2976,7 +2994,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 4
-    m_ConditionEvent: xInput
+    m_ConditionEvent: movementX
     m_EventTreshold: -0.01
   - m_ConditionMode: 1
     m_ConditionEvent: isWalking
@@ -3051,7 +3069,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 4
-    m_ConditionEvent: xInput
+    m_ConditionEvent: movementX
     m_EventTreshold: -0.01
   - m_ConditionMode: 1
     m_ConditionEvent: isWalking
@@ -3304,7 +3322,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: yInput
+    m_ConditionEvent: movementY
     m_EventTreshold: 0.01
   - m_ConditionMode: 1
     m_ConditionEvent: isWalking
@@ -3404,7 +3422,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: yInput
+    m_ConditionEvent: movementY
     m_EventTreshold: 0.01
   - m_ConditionMode: 1
     m_ConditionEvent: isWalking
@@ -3457,7 +3475,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 4
-    m_ConditionEvent: yInput
+    m_ConditionEvent: movementY
     m_EventTreshold: -0.01
   - m_ConditionMode: 1
     m_ConditionEvent: isWalking
@@ -3632,7 +3650,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 4
-    m_ConditionEvent: yInput
+    m_ConditionEvent: movementY
     m_EventTreshold: -0.01
   - m_ConditionMode: 1
     m_ConditionEvent: isRunning
@@ -3710,7 +3728,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: yInput
+    m_ConditionEvent: movementY
     m_EventTreshold: 0.01
   - m_ConditionMode: 1
     m_ConditionEvent: isWalking
@@ -3785,7 +3803,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 4
-    m_ConditionEvent: yInput
+    m_ConditionEvent: movementY
     m_EventTreshold: 0.01
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102802030401212310}
@@ -3835,7 +3853,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 4
-    m_ConditionEvent: xInput
+    m_ConditionEvent: movementX
     m_EventTreshold: -0.01
   - m_ConditionMode: 1
     m_ConditionEvent: isRunning
@@ -3985,7 +4003,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: yInput
+    m_ConditionEvent: movementY
     m_EventTreshold: 0.01
   - m_ConditionMode: 1
     m_ConditionEvent: isRunning
@@ -4013,7 +4031,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 4
-    m_ConditionEvent: yInput
+    m_ConditionEvent: movementY
     m_EventTreshold: -0.01
   - m_ConditionMode: 1
     m_ConditionEvent: isWalking

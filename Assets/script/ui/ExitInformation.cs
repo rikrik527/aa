@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Cinemachine;
+using System;
+
 public class ExitInformation : MonoBehaviour
 {
 
@@ -15,7 +17,7 @@ public class ExitInformation : MonoBehaviour
     private SelectingAnimations _selectingAnimations;
     [SerializeField]
     private CinemachineVirtualCamera targetCam;
-    private CinemachineTransposer transposer;
+    private CinemachineFramingTransposer transposer;
     //cam1
     [SerializeField]
     private GameObject cam1;
@@ -32,30 +34,48 @@ public class ExitInformation : MonoBehaviour
     //rect trasform informationpanel
     [SerializeField]
     private RectTransform recInfoMation;
+    //view angle
+    [SerializeField]
+    private GameObject CloseUpView;
+
+    [SerializeField]
+    private GameObject CityView;
+
+    [SerializeField]
+    private GameObject DefaultView;
 
 
 
     private void Init()
     {
-        targetCam = GameObject.FindGameObjectWithTag("cam4").GetComponent<CinemachineVirtualCamera>();
-        transposer = targetCam.GetCinemachineComponent<CinemachineTransposer>();
+
+        transposer = targetCam.GetComponentInChildren<CinemachineFramingTransposer>();
         _selectingAnimations = GameObject.FindGameObjectWithTag("select").GetComponent<SelectingAnimations>();
 
         if (informationPanel != null)
         {
-
-            recInfoMation.localScale = new Vector3(0f, 0f, 1f);
+            Debug.Log("not null information");
+            recInfoMation.anchoredPosition = Vector3.zero;
 
 
 
         }
 
+
     }
     private void Awake()
     {
 
+        try
+        {
+            Init();
+            Debug.Log("tried");
+        }
+        catch (Exception ex)
+        {
+            Debug.Log("ex" + ex.ToString());
+        }
 
-        Init();
 
     }
     public void Exit()
@@ -69,20 +89,25 @@ public class ExitInformation : MonoBehaviour
         {
             Debug.Log("transdposer ==  nukll");
         }
-        targetCam.m_Lens.OrthographicSize = SingletonDefaultCamera.defaultOrthographicSize;
-        Debug.Log("transposer" + transposer);
-        transposer.m_FollowOffset.x = SingletonDefaultCamera.defaultOffsetX;
-        transposer.m_FollowOffset.y = SingletonDefaultCamera.defaultOffsetY;
-        transposer.m_FollowOffset.z = SingletonDefaultCamera.defaultOffsetZ;
-        cam1.SetActive(true);
+
+
         targetCam.gameObject.SetActive(false);
 
 
+        //targetCam.m_Lens.OrthographicSize = SingletonDefaultCamera.defaultOrthographicSize;
+        //Debug.Log("transposer" + transposer);
+        //transposer.m_FollowOffset.x = SingletonDefaultCamera.defaultOffsetX;
+        //transposer.m_FollowOffset.y = SingletonDefaultCamera.defaultOffsetY;
+        //transposer.m_FollowOffset.z = SingletonDefaultCamera.defaultOffsetZ;
 
-
-        recInfoMation.localScale = new Vector3(0f, 0f, 1f);
+        CityView.SetActive(true)
+         ;
+        DefaultView.SetActive(true)
+;
+        CloseUpView.SetActive(true)
+;
         recInfoMation.gameObject.SetActive(false);
-
+        _selectingAnimations.NotSelect();
 
 
 

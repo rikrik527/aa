@@ -26,7 +26,7 @@ public class CameraEngine : MonoBehaviour
     private CinemachineVirtualCamera targetCam;
     [SerializeField]
     private CinemachineBrain cinemachineBrain;
-    private CinemachineTransposer transposer;
+    private CinemachineFramingTransposer transposer;
 
     [SerializeField]
     private Transform none;//set m follow to none
@@ -53,8 +53,10 @@ public class CameraEngine : MonoBehaviour
     [SerializeField]
     private Text distanceText;
 
+
     public static float distance;
     public static int distanceInt;
+
 
     //outline near 0+m
     [SerializeField]
@@ -66,7 +68,8 @@ public class CameraEngine : MonoBehaviour
 
 
 
-
+    //clicked on npc
+    private bool clickedOnNpc;
 
 
 
@@ -118,8 +121,8 @@ public class CameraEngine : MonoBehaviour
         selectingAnimations = _selecting.GetComponent<SelectingAnimations>();
 
         vcam = GameObject.FindGameObjectWithTag("cam1").GetComponent<CinemachineVirtualCamera>();
-        targetCam = GameObject.FindGameObjectWithTag("cam4").GetComponent<CinemachineVirtualCamera>();
-        transposer = targetCam.GetCinemachineComponent<CinemachineTransposer>();
+        //targetCam = GameObject.FindGameObjectWithTag("cam4").GetComponent<CinemachineVirtualCamera>();
+        transposer = targetCam.GetComponentInChildren<CinemachineFramingTransposer>();
         //cinemachinBrain
         cinemachineBrain = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CinemachineBrain>();
 
@@ -130,17 +133,22 @@ public class CameraEngine : MonoBehaviour
         {
             Debug.Log("targetcam is null");
         }
+        if (transposer == null)
+        {
+            Debug.Log("null trasposer");
+        }
 
     }
     private void Awake()
     {
+
         Init();
 
 
 
-        transposer.m_FollowOffset.x = SingletonDefaultCamera.defaultOffsetX;
-        transposer.m_FollowOffset.y = SingletonDefaultCamera.defaultOffsetY;
-        transposer.m_FollowOffset.z = SingletonDefaultCamera.defaultOffsetZ;
+        transposer.m_TrackedObjectOffset.x = SingletonDefaultCamera.defaultOffsetX;
+        transposer.m_TrackedObjectOffset.y = SingletonDefaultCamera.defaultOffsetY;
+        transposer.m_TrackedObjectOffset.z = SingletonDefaultCamera.defaultOffsetZ;
         targetCam.m_Lens.OrthographicSize = SingletonDefaultCamera.defaultOrthographicSize;
 
     }
@@ -187,37 +195,46 @@ public class CameraEngine : MonoBehaviour
         //FindDistance();
         if (Input.GetMouseButtonDown(0))
         {
-
+            Debug.Log("clickedonnpc" + clickedOnNpc);
             Vector2 worldPoint = camera.ScreenToWorldPoint(Input.mousePosition);
             Vector3 screenPos = camera.WorldToScreenPoint((Vector3)spriteRenderer.transform.position);
             var canvas = GameObject.Find("Canvas");
             RaycastHit2D hitInfo = Physics2D.Raycast(worldPoint, Vector2.zero);
             //Instantiate(_yushan, worldPoint, _yushan.rotation);
+
             if (hitInfo.collider != null)
             {
                 Debug.Log("clicked" + hitInfo.collider);
                 if (hitInfo.collider.tag == "npc")
                 {
+                    clickedOnNpc = true;
                     Debug.Log("npc" + hitInfo.collider.transform);
 
                     Debug.Log("distanceint" + distanceInt);
+                    // disable change view while selecting character
+
+                    CityView.SetActive(false);
+                    DefaultView.SetActive(false);
+                    CloseUpView.SetActive(false);
                     target = hitInfo.collider.gameObject.transform;
                     //Debug.Log("select" + _selecting.GetComponents<RectTransform>().GetValue((int)_selecting.rect.x));
+                    selectingAnimations.Selecting();
                     _selecting.anchoredPosition = Vector3.zero;
                     infomationPanel.gameObject.SetActive(true);
+                    //infomationPanel.anchoredPosition = Vector3.zero;
 
-                    cam1.SetActive(false);
-                    cam2.SetActive(false);
-                    cam3.SetActive(false);
+                    //cam1.SetActive(false);
+                    //cam2.SetActive(false);
+                    //cam3.SetActive(false);
                     targetCam.gameObject.SetActive(true);
                     targetCam.m_Follow = target;
                     targetCam.m_Lens.OrthographicSize = SingletonDefaultCamera.selectedOrthographicSize;
 
                     Debug.Log("cam1 and targetcam" + cam1.activeInHierarchy +
                         "tarhetcam" + targetCam.gameObject.active);
-                    transposer.m_FollowOffset.y = SingletonDefaultCamera.selectedOffsetY;
-                    transposer.m_FollowOffset.x = SingletonDefaultCamera.selectedOffsetX;
-                    transposer.m_FollowOffset.z = SingletonDefaultCamera.selectedOffsetZ;
+                    transposer.m_TrackedObjectOffset.y = SingletonDefaultCamera.selectedOffsetY;
+                    transposer.m_TrackedObjectOffset.x = SingletonDefaultCamera.selectedOffsetX;
+                    transposer.m_TrackedObjectOffset.z = SingletonDefaultCamera.selectedOffsetZ;
                     //if (distanceInt <= 0)
                     //{
 
@@ -241,25 +258,8 @@ public class CameraEngine : MonoBehaviour
 
 
                 }
-                if (hitInfo.collider.tag != "npc" || hitInfo.collider.tag == null)
-                {
-                    Debug.Log("hitinfo.collider.tag" + hitInfo.collider.tag);
-                    target = none;
-                    //transposer.m_FollowOffset.x = defaultOffsetX;
-                    //transposer.m_FollowOffset.y = defaultOffsetY;
-                    //transposer.m_FollowOffset.z = defaultOffsetZ;
-                    //cam1.m_Lens.OrthographicSize = defaultOrthographicSize;
-
-                    targetCam.gameObject.SetActive(false);
-                    cam1.SetActive(true);
-
-                    cam1.GetComponent<CinemachineVirtualCamera>().m_Follow = _yushan;
-
-                    Debug.Log("cameraEngine update else" + target);
 
 
-
-                }
 
             }
 
@@ -406,21 +406,38 @@ public class CameraEngine : MonoBehaviour
 
 
                 distanceInt = (int)distance;
+                Vector2 newPos = closestNpc.transform.position;
+                //distanceText.text = closestNpc.name.ToString() + ":" + distanceInt.ToString() + "M";
 
-                distanceText.text = closestNpc.name.ToString() + ":" + distanceInt.ToString() + "M";
-                if (distanceInt == 0)
+                if (distanceInt >= 3)
                 {
-                    Vector2 newPos = closestNpc.transform.position;
-
-                    rectTransform.anchoredPosition = new Vector2(newPos.x, newPos.y);
                     distanceText.text = closestNpc.name.ToString() + ":" + distanceInt.ToString() + "M";
 
-                }
-                if (distanceInt >= 1)
-                {
+                    if (distanceInt == 0)
+                    {
+
+                        rectTransform.gameObject.SetActive(true);
+                        //rectransform = cnavas text
+                        rectTransform.anchoredPosition = new Vector2(newPos.x, newPos.y);
+                        Vector2 recPos = rectTransform.anchoredPosition;
+                        Debug.Log("finddistance text closenpc" + rectTransform.transform.position + closestNpc.transform.position);
 
 
+                        distanceText.text = closestNpc.name.ToString() + ":" + distanceInt.ToString() + "M";
+                        if (distanceInt >= 1)
+                        {
+                            rectTransform.gameObject.SetActive(false);
+                        }
+
+                    }
                 }
+
+
+                //if (distanceInt >= 1)
+                //{
+                //    distanceText.text = 
+
+                //}
             }
             else if (closestNpc == null)
             {

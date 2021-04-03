@@ -22,9 +22,6 @@ public class AttachCursorSelecting : MonoBehaviour
         selecting.anchoredPosition = anchoredPos;
 
     }
-    private void Update()
-    {
-        selectingAnimations.Selecting();
-    }
+
 
 }

@@ -36,7 +36,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: selecting-trigger
+    m_ConditionEvent: selected
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: not-select
@@ -64,13 +64,13 @@ AnimatorController:
   m_Name: Image
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: selecting-trigger
-    m_Type: 9
+  - m_Name: not-select
+    m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: not-select
+  - m_Name: selected
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -99,6 +99,9 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: not-select
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: selected
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -7891332563745956912}

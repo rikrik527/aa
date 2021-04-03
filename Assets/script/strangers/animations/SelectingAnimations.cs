@@ -12,11 +12,13 @@ public class SelectingAnimations : MonoBehaviour
     public void Selecting()
     {
         Debug.Log("selecting");
-        _animator.SetTrigger("selecting-trigger");
+        _animator.SetBool("selected", true);
         _animator.SetBool("not-select", false);
     }
     public void NotSelect()
     {
+        Debug.Log("not-select is called");
+        _animator.SetBool("selected", false);
         _animator.SetBool("not-select", true);
     }
 }

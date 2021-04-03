@@ -13,10 +13,13 @@ public class PlayerAnimationsParameterControls : MonoBehaviour
     }
     private void OnEnable()
     {
+
         EventsHandler.MovementEvent += SetAnimationParameters;
+        Debug.Log("onenabled");
     }
     private void OnDisable()
     {
+        Debug.Log("ondisabled");
         EventsHandler.MovementEvent -= SetAnimationParameters;
     }
     private void SetAnimationParameters(float movementX, float movementY, bool isWalking, bool isRunning, bool isIdle, bool isCarrying, ToolEffect toolEffect,
@@ -61,18 +64,19 @@ public class PlayerAnimationsParameterControls : MonoBehaviour
 //bool isHairDown,
 //bool isHairRight,
 //bool isHairLeft,
-
-bool isIdleUp, bool isIdleDown,
-bool isIdleRight, bool isIdleLeft)
+bool isBagDown,
+bool idleUp, bool idleDown,
+bool idleRight, bool idleLeft)
     {
         Debug.Log("setamimationparamaters");
         animator.SetFloat(Settings.movementX, movementX);
         animator.SetFloat(Settings.movementY, movementY);
         animator.SetBool(Settings.isWalking, isWalking);
         animator.SetBool(Settings.isRunning, isRunning);
-
+        Debug.Log("playeranimationparamatercontrols" + Settings.movementX + "movementx" + movementX);
         animator.SetInteger(Settings.toolEffect, (int)toolEffect);
-
+        animator.SetBool(Settings.isIdle, isIdle);
+        animator.SetBool(Settings.isCarrying, isCarrying);
         if (isUsingToolRight)
             animator.SetTrigger(Settings.isUsingToolRight);
         if (isUsingToolLeft)
@@ -112,15 +116,18 @@ bool isIdleRight, bool isIdleLeft)
         if (isPickingDown)
             animator.SetTrigger(Settings.isPickingDown);
 
+        if (isBagDown)
+            animator.SetBool(Settings.isBagDown, isBagDown);
 
-        if (isIdleUp)
-            animator.SetTrigger(Settings.isIdleUp);
-        if (isIdleDown)
-            animator.SetTrigger(Settings.isIdleDown);
-        if (isIdleLeft)
-            animator.SetTrigger(Settings.isIdleLeft);
-        if (isIdleRight)
-            animator.SetTrigger(Settings.isIdleRight);
+        if (idleUp)
+            animator.SetTrigger(Settings.idleUp);
+        if (idleDown)
+            Debug.Log("idledown" + idleDown + Settings.idleDown);
+        animator.SetTrigger(Settings.idleDown);
+        if (idleLeft)
+            animator.SetTrigger(Settings.idleLeft);
+        if (idleRight)
+            animator.SetTrigger(Settings.idleRight);
 
     }
 
